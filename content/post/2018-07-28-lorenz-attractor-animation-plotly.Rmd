@@ -1,0 +1,106 @@
+---
+title: Lorenz attractor animation (Plotly)
+author: Lambda Moses
+date: '2018-07-28'
+categories:
+  - R
+tags:
+  - aesthetic
+  - math
+slug: lorenz-attractor-animation-plotly
+thumbnailImage: "img/lorenz.png"
+---
+This is the first post in this blog.
+```{r, echo=FALSE}
+"Hello World!"
+```
+
+Once for a class assignment, we were asked to control the Lorenz system. The instructor recommended us to use MATLAB for assignments, but since I'm inexperienced in MATLAB, I decided to use R to do the assignments, and used the package `plotly` to make interactive 3D plots of phase portraits[^1] of the Lorenz system. Later, I made the iconic animation to demonstrate chaos -- how minuscule differences in the initial condition of the system gets magnified exponentially, resulting into significantly different outcomes. Here, I'll share how to make such an animation with `plotly`.
+
+First things first, what is the Lorenz system? Basically, it's a system of 3 differential equations, a simplified model of air flow. The equations are: 
+$$\begin{align}
+\frac{dx}{dt} &= \sigma(y - x) \\
+\frac{dy}{dt} &= (\rho - z)x - y \\
+\frac{dz}{dt} &= xy - \beta z
+\end{align}$$
+
+Where $t$ denotes time, $x$ fluid motion, $y$ horizontal temperature, $z$ vertical temperature, and $\sigma, \rho,$ and $\beta$ parameters that specifies the particulars of the system that are constant through time. For $\sigma = 10, \rho = 28, \beta = 8/3$, this system demonstrates chaotic behavior. Its phase portraits is the iconic butterfly, as we shall soon see.
+
+Let's solve the system of equations numerically first. There're a number of packages that can numerically [solve differential equations in R](https://CRAN.R-project.org/view=DifferentialEquations
+). One of them is `deSolve`, which is the one I'm using here. Another one I have used is `pracma`, which deliberately imitates the syntax of MATLAB. I don't know enough math to solve the equations analytically, so I resort to a numeric solution.
+```{r, message=FALSE}
+# Package for solving differential equations
+library(deSolve)
+# Package for interactive 3D plots
+library(plotly)
+```
+
+```{r}
+# Specify the equations
+lorenz <- function(t, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dx <- sigma * (y - x)
+    dy <- x * (rho - z) - y
+    dz <- x * y - beta * z
+    list(c(dx, dy, dz))
+  })
+}
+```
+What I mean by "numeric" is that time is discretized (here into steps of 0.01 time units), and since we know from the equations themselves how $x,y,z$ change through time, we can use a variety of methods to compute what the values of $x,y,z$ in the next time step will be given their values at present, starting at the initial condition (when time is 0). Here I used `ode45`, which is a popular [method](http://mathworld.wolfram.com/Runge-KuttaMethod.html).
+```{r}
+# Specify parameters
+parameters <- c(sigma = 10, beta = 8/3, rho = 28)
+# Initial conditions, in the order x, y, z
+state <- c(x = 2, y = 3, z = 4)
+# Time over which the equations are numerically solved, 25 units
+times <- seq(0, 25, 0.01)
+# Solve the equations
+sol <- as.data.frame(ode(y = state, times = times, func = lorenz, parms = parameters, method = "ode45"))
+```
+The object `sol` is a data frames that contains a numerical solution
+```{r}
+head(sol)
+```
+Now plot the approximate solution. Plotting in `plotly` is a bit different from in `ggplot2`; we need a formula, with the `~`, to specify the variable given a data frame, kind of like the `aes` in `ggplot2`.
+```{r}
+plot_ly(data = sol, x = ~x, y = ~y, z = ~z) %>%
+  add_paths(color = ~time) %>% 
+  # Set where the camera is set by default
+  layout(scene = list(camera = list(eye = list(x = -1, y = 1, z = 0.25))))
+```
+
+Cool, it's the iconic butterfly! We also see how the state of the system traverses between the two wings of the butterfly through time.
+
+It's actually not difficult to add an animated point traversing the phase space through time. I'm adding one point, that moves along the $x,y,z$ as specified in the `sol` data frame through time (`frame` argument). In the function `animation_opts`, `frame = 1` means 1 millisecond per frame. `redraw = FALSE` means you can't toggle the camera perspective while the animation is playing; this improves performance. This may take a while to render.
+```{r}
+# As usual
+plot_ly(sol, x = ~x, y = ~y, z = ~z) %>%
+  add_paths(color = ~time) %>% 
+  add_markers(frame = ~time, marker = list(size = 3, color = "black")) %>%
+  animation_opts(frame = 1, redraw = FALSE) %>%
+  layout(scene = list(camera = list(eye = list(x = -1, y = 1, z = 0.25))))
+```
+
+To demonstrate chaos, let's solve the Lorenz system again, with a slightly different initial condition. Previously, we used (2, 3, 4); here we're just tweaking $z$ by 0.1, which is pretty small compared to how far the moving point travels, which is around 40 units.
+```{r}
+state2 <- c(x = 2, y = 3, z = 4.1)
+# Solve with new initial condition
+sol2 <- as.data.frame(ode(y = state2, times = times, func = lorenz, parms = parameters))
+sol$init <- "(2,3,4)"
+sol2$init <- "(2,3,4.1)"
+# Conbine the two solutions into the same data frame for plotting
+sols <- rbind(sol,sol2)
+```
+
+```{r}
+# Use color to signify initial condition
+plot_ly(sols, x = ~x, y = ~y, z = ~z, color = ~init, colors = c("#42e5f4", "#f441e2")) %>%
+  add_paths() %>% 
+  add_markers(frame = ~time, marker = list(size = 3)) %>%
+  animation_opts(frame = 1, redraw = FALSE) %>%
+  layout(scene = list(camera = list(eye = list(x = -1, y = 1, z = 0.25))))
+```
+
+By around time 7.4, the magenta and cyan points diverge into different wings of the butterfly, and since then, their paths are very different -- in spite of the small tweak in the initial condition!
+
+[^1]: Phase portraits describe how each of the variables (e.g. $x,y,z$ as in the Lorenz system) in the system modeled by differential systems evolve through time, given some initial condition. This is a way to plot solutions of systems of differential equations.

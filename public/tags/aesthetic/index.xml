@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aesthetic on From System to System</title>
+    <link>/tags/aesthetic/</link>
+    <description>Recent content in Aesthetic on From System to System</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/aesthetic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Lorenz attractor animation (Plotly)</title>
+      <link>/2018/07/28/lorenz-attractor-animation-plotly/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/28/lorenz-attractor-animation-plotly/</guid>
+      <description>This is the first post in this blog.
+## [1] &amp;quot;Hello World!&amp;quot; Once for a class assignment, we were asked to control the Lorenz system. The instructor recommended us to use MATLAB for assignments, but since I’m inexperienced in MATLAB, I decided to use R to do the assignments, and used the package plotly to make interactive 3D plots of phase portraits1 of the Lorenz system.</description>
+    </item>
+    
+  </channel>
+</rss>

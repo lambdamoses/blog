@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>From System to System</title>
+    <link>/</link>
+    <description>Recent content on From System to System</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I&amp;rsquo;m Lambda Moses, a graduate student at Caltech studying systems biology, and I use R a lot in my research. This blog is about my special interests, namely R programming and dialogues between science and religion.
+About the name of the blog You may wonder, what does &amp;ldquo;from system to system&amp;rdquo; mean? One of the &amp;ldquo;system&amp;rdquo; signifies systems biology, my field of study. It signifies interdisciplinary thinking, a departure from reductionism, and the future of biomedicine.</description>
+    </item>
+    
+    <item>
+      <title>Lorenz attractor animation (Plotly)</title>
+      <link>/2018/07/28/lorenz-attractor-animation-plotly/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/28/lorenz-attractor-animation-plotly/</guid>
+      <description>This is the first post in this blog.
+## [1] &amp;quot;Hello World!&amp;quot; Once for a class assignment, we were asked to control the Lorenz system. The instructor recommended us to use MATLAB for assignments, but since I’m inexperienced in MATLAB, I decided to use R to do the assignments, and used the package plotly to make interactive 3D plots of phase portraits1 of the Lorenz system.</description>
+    </item>
+    
+    <item>
+      <title>Resources for science and religion</title>
+      <link>/2018/07/28/resources/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/28/resources/</guid>
+      <description>Here are some resources on dialogues between science and religion across faiths that I found helpful. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.k.a. the conflict thesis), this does not imply a bias in favor of religion. Historians of science have discredited the conflict thesis in recent decades, though this development have not gone far beyond the academia.</description>
+    </item>
+    
+  </channel>
+</rss>

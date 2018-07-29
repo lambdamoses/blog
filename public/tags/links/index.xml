@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Links on From System to System</title>
+    <link>/tags/links/</link>
+    <description>Recent content in Links on From System to System</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/links/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Resources for science and religion</title>
+      <link>/2018/07/28/resources/</link>
+      <pubDate>Sat, 28 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/28/resources/</guid>
+      <description>Here are some resources on dialogues between science and religion across faiths that I found helpful. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.k.a. the conflict thesis), this does not imply a bias in favor of religion. Historians of science have discredited the conflict thesis in recent decades, though this development have not gone far beyond the academia.</description>
+    </item>
+    
+  </channel>
+</rss>
