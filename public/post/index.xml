@@ -20,7 +20,7 @@
       <description>See if the code rendering error is only in Rmd
 # Something library(ggplot2)  For ggplot2
 foo &amp;lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo  The example that works
-# A proper comment x &amp;lt;- seq(0,1,0.02) x  for (i in 1:10) { cat(i, &amp;quot;\n&amp;quot;) }  The code did render properly in markdown, except</description>
+# A proper comment x &amp;lt;- seq(0,1,0.02) x  for (i in 1:10) { cat(i, &amp;quot;\n&amp;quot;) }  The code did render properly in markdown, except there&amp;rsquo;s no code highlighting. Anyway, I don&amp;rsquo;t care, since I do want to run my code.</description>
     </item>
     
     <item>
