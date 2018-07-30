@@ -214,6 +214,178 @@
               
   
     
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="/2018/07/30/code-rendering-reprex-2/">
+          Code rendering reprex 2
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-30T00:00:00Z">
+        
+  July 30, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      See if the code rendering error is only in Rmd
+# Something library(ggplot2)  For ggplot2
+foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo  The example that works
+# A proper comment x &lt;- seq(0,1,0.02) x  for (i in 1:10) { cat(i, &quot;\n&quot;) }  The code did render properly in markdown, except
+      <p>
+        <a href="/2018/07/30/code-rendering-reprex-2/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="/2018/07/30/render-error-reprex/">
+          Render error reprex
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-30T00:00:00Z">
+        
+  July 30, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      This is to demonstrate how code highlighting doesn’t work:
+Comments not highlighted properly when I use message = FALSE
+# something library(ggplot2) The foo is moved all the way down here
+foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo Probably this has something to do with ggplot2
+bar &lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wrong in this example:
+# A proper comment x &lt;- seq(0,1,0.
+      <p>
+        <a href="/2018/07/30/render-error-reprex/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="/2018/07/29/lorenz-attractor-animation-gganimate/">
+          Lorenz attractor animation (gganimate)
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-29T00:00:00Z">
+        
+  July 29, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.
+      <p>
+        <a href="/2018/07/29/lorenz-attractor-animation-gganimate/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+    <a href="/2018/07/29/lorenz-attractor-animation-gganimate/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="/img/lorenz_custom_persp.gif"/>
+      </div>
+    </a>
+  
+</article>
+
+            
+              
+  
+    
   
 
 
@@ -335,6 +507,65 @@
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/30/code-rendering-reprex-2/">
+                <h3 class="media-heading">Code rendering reprex 2</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">See if the code rendering error is only in Rmd
+# Something library(ggplot2)  For ggplot2
+foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo  The example that works
+# A proper comment x &lt;- seq(0,1,0.02) x  for (i in 1:10) { cat(i, &quot;\n&quot;) }  The code did render properly in markdown, except</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/30/render-error-reprex/">
+                <h3 class="media-heading">Render error reprex</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is to demonstrate how code highlighting doesn’t work:
+Comments not highlighted properly when I use message = FALSE
+# something library(ggplot2) The foo is moved all the way down here
+foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo Probably this has something to do with ggplot2
+bar &lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wrong in this example:
+# A proper comment x &lt;- seq(0,1,0.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/29/lorenz-attractor-animation-gganimate/">
+                <h3 class="media-heading">Lorenz attractor animation (gganimate)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/07/28/lorenz-attractor-animation-plotly/">
                 <h3 class="media-heading">Lorenz attractor animation (Plotly)</h3>
               </a>
@@ -374,7 +605,7 @@
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         2 posts found
+         5 posts found
       </p>
     </div>
   </div>

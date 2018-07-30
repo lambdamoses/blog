@@ -6,10 +6,33 @@
     <description>Recent content in Math on From System to System</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/math/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Render error reprex</title>
+      <link>/2018/07/30/render-error-reprex/</link>
+      <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/30/render-error-reprex/</guid>
+      <description>This is to demonstrate how code highlighting doesn’t work:
+Comments not highlighted properly when I use message = FALSE
+# something library(ggplot2) The foo is moved all the way down here
+foo &amp;lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo Probably this has something to do with ggplot2
+bar &amp;lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wrong in this example:
+# A proper comment x &amp;lt;- seq(0,1,0.</description>
+    </item>
+    
+    <item>
+      <title>Lorenz attractor animation (gganimate)</title>
+      <link>/2018/07/29/lorenz-attractor-animation-gganimate/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/29/lorenz-attractor-animation-gganimate/</guid>
+      <description>I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</description>
+    </item>
     
     <item>
       <title>Lorenz attractor animation (Plotly)</title>

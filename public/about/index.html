@@ -495,6 +495,65 @@ About the name of the blog You may wonder, what does &ldquo;from system to syste
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/30/code-rendering-reprex-2/">
+                <h3 class="media-heading">Code rendering reprex 2</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">See if the code rendering error is only in Rmd
+# Something library(ggplot2)  For ggplot2
+foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo  The example that works
+# A proper comment x &lt;- seq(0,1,0.02) x  for (i in 1:10) { cat(i, &quot;\n&quot;) }  The code did render properly in markdown, except</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/30/render-error-reprex/">
+                <h3 class="media-heading">Render error reprex</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is to demonstrate how code highlighting doesn’t work:
+Comments not highlighted properly when I use message = FALSE
+# something library(ggplot2) The foo is moved all the way down here
+foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo Probably this has something to do with ggplot2
+bar &lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wrong in this example:
+# A proper comment x &lt;- seq(0,1,0.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/29/lorenz-attractor-animation-gganimate/">
+                <h3 class="media-heading">Lorenz attractor animation (gganimate)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/07/28/lorenz-attractor-animation-plotly/">
                 <h3 class="media-heading">Lorenz attractor animation (Plotly)</h3>
               </a>
@@ -534,7 +593,7 @@ About the name of the blog You may wonder, what does &ldquo;from system to syste
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         2 posts found
+         5 posts found
       </p>
     </div>
   </div>

@@ -1,0 +1,96 @@
+---
+title: Lorenz attractor animation (gganimate)
+author: Lambda Moses
+date: '2018-07-29'
+slug: lorenz-attractor-animation-gganimate
+categories:
+  - R
+tags:
+  - aesthetic
+  - math
+thumbnailImage: "img/lorenz_custom_persp.gif"
+---
+
+
+
+<p>I have previously written about making the iconic <a href="/post/lorenz-attractor-animation-plotly/">Lorenz attractor animation with <code>plotly</code></a>; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of <code>gganimate</code> which implements a <a href="https://www.youtube.com/watch?v=21ZWDrTukEs">grammar of animation</a>, much like the grammar of graphics in <code>ggplot2</code>. In the older version by David Robinson, animation was made by adding and <code>aes</code> called <code>frame</code>. Now it’s just like adding <code>geom_*</code>s, <code>scale_*</code>s, <code>stat_*</code>s, and etc. The new <code>gganimate</code> is not yet on CRAN; you can find it on <a href="https://github.com/thomasp85/gganimate">GitHub</a>. Here I use the new version of <code>ggaminate</code> to make Lorenz attractor animations. Please make sure to have the most up to date version of <code>gganimate</code> installed in order to run the code in this post.</p>
+<pre class="r"><code>library(ggplot2)
+library(gganimate)
+library(deSolve)
+# 3D plots with ggplot2
+library(gg3D)</code></pre>
+<p>Again, numerically solve the equations with 2 slightly different initial conditions.</p>
+<pre class="r"><code># Specify the equations
+lorenz &lt;- function(t, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dx &lt;- sigma * (y - x)
+    dy &lt;- x * (rho - z) - y
+    dz &lt;- x * y - beta * z
+    list(c(dx, dy, dz))
+  })
+}
+
+# Solve with any initial condition
+lorenz_solve &lt;- function(y, t, params) {
+  as.data.frame(ode(y = y, times = t, func = lorenz, parms = params, method = &quot;ode45&quot;))
+}
+
+# Specify parameters
+parameters &lt;- c(sigma = 10, beta = 8/3, rho = 28)
+# Time over which the equations are numerically solved, 25 units
+times &lt;- seq(0, 25, 0.01)
+# Initial conditions, in the order x, y, z
+state &lt;- c(x = 2, y = 3, z = 4)
+state2 &lt;- c(x = 2, y = 3, z = 4.1)
+# Solve
+sol &lt;- lorenz_solve(state, times, parameters)
+sol2 &lt;- lorenz_solve(state2, times, parameters)
+sol$init &lt;- &quot;(2,3,4)&quot;
+sol2$init &lt;- &quot;(2,3,4.1)&quot;
+# Combine the two solutions into the same data frame for plotting
+# I dropped the last time point to get a nice number to get an integer number of frames
+sols &lt;- rbind(sol[1:2500,],sol2[1:2500,])</code></pre>
+<p>Note the difference between <code>geom_path</code> and <code>geom_line</code>; the former connects points in the order as they appear in the data frame, while the latter by the order of the points on the x axis. Another thing to note is that <code>transition_*</code> applies to all layers. In order to only animate one or some layers while keeping some other layers static, the static layers should be specified using a separate data frame. For the <code>animate</code> function, you can choose from a few different renderers of the gif. Initially I used <code>renderer = magick_renderer()</code>; it used up all my memory and encroached my disk space, eventually forcing me to force quit RStudio as my disk space was running out. Then I updated <code>gganimate</code>; now its default gif renderer is <code>gifski</code>, which is a lot faster and memory efficient than <code>magick</code>. It took a while to render; on my computer, it took about 15 minutes.</p>
+<p>Actually, back in the <a href="/post/lorenz-attractor-animation-plotly/"><code>plotly</code> post</a>, when making the animation, I set <code>frame = 1</code>; this means each frame takes 1 millisecond, or 1000 frames per second. That would be way too fast. I did it just to force my computer to work as hard as it can to get the animation running. However, for gif, we have better control over how fast the animation should run, by the <code>fps</code> argument; my computer works hard to render the gif, but once the gif is produced, my computer no longer needs to work that hard to run the animation. RStudio does not automatically embed the gif in the R notebook (as of the <a href="https://www.rstudio.com/products/rstudio/download/preview/">preview version 1.2</a>), so I first saved the animation with <code>anim_save</code>, and then inserted it into the R notebook here.</p>
+<pre class="r"><code># xy
+p1 &lt;- ggplot(sols, aes(x, z, color = init)) +
+  geom_path(data = sols[,-1], aes(x, z, color = init), size = 0.5) +
+  geom_point() +
+  scale_color_manual(values = c(&quot;#42e5f4&quot;, &quot;#f441e2&quot;)) +
+  theme_bw()  +
+  coord_equal() +
+  transition_time(time = time)
+animate(p1, nframes = 2500, fps = 25, renderer = gifski_renderer())
+# Animation&#39;s equivalence of ggsave
+anim_save(&quot;lorenz_xz.gif&quot;)</code></pre>
+<p>God, it’s over 70 MB! I feel sorry for those who have slow internet to put this huge version here. Fortunately, there are ways to compress gifs. One of them is the command line tool <a href="https://www.lcdf.org/gifsicle/"><code>gifsicle</code></a>. On Mac, it can be installed by</p>
+<pre class="bash"><code>brew install gifsicle</code></pre>
+<p>For those who are unfamiliar with the command line (I don’t like the command line either), please <a href="https://brew.sh">install homebrew</a> first. Windows users can download <code>gifsicle</code> <a href="https://eternallybored.org/misc/gifsicle/">here</a>.</p>
+<p>What actually takes up so much disk space is color. Here I’m only using simple colors without gradients, so I can significantly reduce color depth without compromising quality of the gif too much. I did this: <code>-O3</code> compresses the gif by only saving changed portion of the image and reduces the size by using transparency. I chose 16 bit color (8 bit compromises the quality too much), and shrunk the original 480x480 image to 400x400, not too much.</p>
+<pre class="bash"><code>gifsicle lorenz_xz.gif --optimize -O3 --colors 16 --resize 400x400  -o lorenz_xz_small2.gif</code></pre>
+<p>Wow, this shrunk the whopping 71.9 MB image to a much more acceptable 3.3 MB! Here’s the result:</p>
+<p><img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_xz_small2.gif" /></p>
+<p>Cool. But wouldn’t it be nice if we can choose an arbitrary camera perspective? In <code>ggplot2</code>, we can only plot how x, y, and z relate to each other; we need to do some sort of complicated transformation in order to plot an arbitrary perspective. The good news is, there’s a package called <a href="https://github.com/AckerDWM/gg3D"><code>gg_3D</code></a> (not yet on CRAN), that allows us to make 3D (though not interactive) plots with <code>ggplot2</code>; here we can set arbitrary camera perspectives with <code>theta</code> and <code>phi</code> as in spherical coordinates. This is better than nothing, though it’s not very intuitive and takes trial and error to find the best (in my case here, the prettiest) perspective, and you have to restate the <code>theta</code> and <code>phi</code> for every single layer you add. Another inconvenience with this package right now is that we have to painstakingly adjust the positions of axis labels manually; the package does not automatically place axis labels at the right place when you use non-default perspective. I hope that this will improve in the future. Let me first use <code>gg3D</code> to recreate the perspective I used in my <a href="/post/lorenz-attractor-animation-plotly/"><code>plotly</code> post</a>.</p>
+<pre class="r"><code>ggplot(sol, aes(x = x, y = y, z = z, color = time)) +
+  theme_void() +
+  axes_3D(theta = -135, phi = 14) +
+  stat_3D(geom = &quot;path&quot;, theta = -135, phi = 14) +
+  scale_color_viridis_c() +
+  labs_3D(labs = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;), hjust = c(-15, 18, -21), vjust = c(0, 16, 7)) +
+  coord_equal()</code></pre>
+<p><img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Nice, it works! Here’s the animation</p>
+<pre class="r"><code>p2 &lt;- ggplot(sols, aes(x = x, y = y, z = z, color = init)) +
+  theme_void() +
+  axes_3D(theta = -135, phi = 14) +
+  stat_3D(data = sols[,-1], mapping = aes(x = x, y = y, z = z, color = init), 
+          geom = &quot;path&quot;, size = 0.5, theta = -135, phi = 14) +
+  stat_3D(geom = &quot;point&quot;, theta = -135, phi = 14) +
+  labs_3D(labs = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;), 
+          hjust = rep(c(-15, 18, -21), 2500), vjust = rep(c(0, 16, 7), 2500)) +
+  coord_equal() +
+  transition_time(time)
+animate(p2, nframes = 2500, fps = 20)
+anim_save(&quot;lorenz_custom_persp.gif&quot;)</code></pre>
+<p>The resulting gif is 58.8 MB. Again, I compressed the image with <code>gifsicle</code> like I did above and shrunk it into 2.5 MB.</p>
+<p><img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_custom_pers_small.gif" /></p>
