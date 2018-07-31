@@ -16,12 +16,13 @@ I have previously written about making the iconic [Lorenz attractor animation wi
 ```{r, message=FALSE}
 library(ggplot2)
 library(gganimate)
+# Solve differential equations
 library(deSolve)
 # 3D plots with ggplot2
 library(gg3D)
 ```
 
-Again, numerically solve the equations with 2 slightly different initial conditions.
+As in the [`plotly` post](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/), numerically solve the equations with 2 slightly different initial conditions.
 ```{r}
 # Specify the equations
 lorenz <- function(t, state, parameters) {
@@ -55,9 +56,29 @@ sol2$init <- "(2,3,4.1)"
 sols <- rbind(sol[1:2500,],sol2[1:2500,])
 ```
 
-Note the difference between `geom_path` and `geom_line`; the former connects points in the order as they appear in the data frame, while the latter by the order of the points on the x axis. Another thing to note is that `transition_*` applies to all layers. In order to only animate one or some layers while keeping some other layers static, the static layers should be specified using a separate data frame. For the `animate` function, you can choose from a few different renderers of the gif. Initially I used `renderer = magick_renderer()`; it used up all my memory and encroached my disk space, eventually forcing me to force quit RStudio as my disk space was running out. Then I updated `gganimate`; now its default gif renderer is `gifski`, which is a lot faster and memory efficient than `magick`. It took a while to render; on my computer, it took about 15 minutes.
+The data frame holding the numerical solutions is like this
+```{r}
+head(sols)
+```
 
-Actually, back in the [`plotly` post](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/), when making the animation, I set `frame = 1`; this means each frame takes 1 millisecond, or 1000 frames per second. That would be way too fast. I did it just to force my computer to work as hard as it can to get the animation running. However, for gif, we have better control over how fast the animation should run, by the `fps` argument; my computer works hard to render the gif, but once the gif is produced, my computer no longer needs to work that hard to run the animation. RStudio does not automatically embed the gif in the R notebook (as of the [preview version 1.2](https://www.rstudio.com/products/rstudio/download/preview/)), so I first saved the animation with `anim_save`, and then inserted it into the R notebook here.
+### The plot explained
+This is the plot we're going to produce:
+
+<center>
+![](/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_xz_small2.gif)
+</center>
+
+Making a gif is more complicated than using `plotly`. For new useRs, here's something to note about `ggplot2` when plotting the Lorenz system's behaviors. I assume that you know the basics of `ggplot2`, but this is an easy trap to fall into. Note the difference between `geom_path` and `geom_line`; the former connects points in the order as they appear in the data frame, while the latter by the order of the points on the x axis. Since we're connecting points through time rather than x, what we want here is `geom_path`. 
+
+Just like `geom_*`s and `stat_*`s, the animation here is added by a layer called `transition_*`. The one relevant here is `transition_time`, in which we specify a variable in the data frame that encodes time, so the variables plotted will change with time in the manner specified by this variable. There're other `transition_*`s as well, such as `transition_state`, which switches between different states of the data through time, as specified by a categorical variable, as opposed to a continuous variable in the case of `transition_time`. The down side of this is that `transition_*` applies to all other layers. In order to only animate one or some layers while keeping some other layers static, the static layers should be specified using a separate data frame. 
+
+By default, the animation is rendered with default settings when the `ggplot` object is printed. In order to choose a non-default renderer, control how fast the animation runs, how many frames, and etc., we should pass the `ggplot` object to the `animate` function. For the `animate` function, you can choose from a few different renderers for the gif. Initially I used `renderer = magick_renderer()`; it used up all my memory and encroached my disk space, eventually forcing me to force quit RStudio as my disk space was running out. Then I updated `gganimate`; now its default gif renderer is `gifski`, which is a lot faster and memory efficient than `magick`. It took a while to render; on my computer, it took about 15 minutes to render 2500 frames, one frame for each time point. 
+
+The number of frames is specified by the argument `nframes`. In this case, I chose as many frames as there are time points. If the number of frames is more than the number of time points, then the moving point will pause at each time point, which is desirable in some cases of data presentation, but not here. More frames than time points is helpful when the data points travel a long distance from frame to frame; it helps to interpolate when the data points travel, resulting into a smooth animation. Here, our moving point travels a very short distance from frame to frame, so we don't need interpolation. If the number of frames is less than the number of time points, then in each frame, points from several adjacent frames will be displayed as what we intended to be multiple frames get binned into one frame, while we only want one one moving point for each initial condition. So here, we should give each time point a frame.
+
+Actually, back in the [`plotly` post](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/), when making the animation, I set `frame = 1`; this means each frame takes 1 millisecond, or 1000 frames per second. That would be way too fast. I did it just to force my computer to work as hard as it can to get the animation running. However, for gif, we have better control over how fast the animation should run, by the `fps` (frames per second) argument in `animate`; my computer works hard to render the gif, but once the gif is produced, my computer no longer needs to work that hard to run the animation. RStudio does not automatically embed the gif in the R notebook (as of the [preview version 1.2](https://www.rstudio.com/products/rstudio/download/preview/)), so I first saved the animation with `anim_save`, the animation equivalence of `ggsave` for static images, and then inserted it into the R notebook here.
+
+In the code below, we're putting the pieces together.
 
 ```{r lorenz_xz, eval=FALSE}
 # xy
@@ -65,15 +86,19 @@ p1 <- ggplot(sols, aes(x, z, color = init)) +
   geom_path(data = sols[,-1], aes(x, z, color = init), size = 0.5) +
   geom_point() +
   scale_color_manual(values = c("#42e5f4", "#f441e2")) +
+  # theme with white background
   theme_bw()  +
+  # Make sure that units of the axes have the same length
   coord_equal() +
+  # Use the time column in the data frame
   transition_time(time = time)
 animate(p1, nframes = 2500, fps = 25, renderer = gifski_renderer())
-# Animation's equivalence of ggsave
+# Save the animation
 anim_save("lorenz_xz.gif")
 ```
 
-God, it's over 70 MB! I feel sorry for those who have slow internet to put this huge version here. Fortunately, there are ways to compress gifs. One of them is the command line tool [`gifsicle`](https://www.lcdf.org/gifsicle/). On Mac, it can be installed by
+### Compressing the GIF
+God, the gif just produced is over 70 MB! I feel sorry for those who have slow internet to put this huge version here. Fortunately, there are ways to compress gifs. One of them is the command line tool [`gifsicle`](https://www.lcdf.org/gifsicle/). On Mac, it can be installed by
 
 ```{bash, eval = FALSE}
 brew install gifsicle
@@ -93,6 +118,7 @@ Wow, this shrunk the whopping 71.9 MB image to a much more acceptable 3.3 MB! He
 ![](/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_xz_small2.gif)
 </center>
 
+### Custom perspectives
 Cool. But wouldn't it be nice if we can choose an arbitrary camera perspective? In `ggplot2`, we can only plot how x, y, and z relate to each other; we need to do some sort of complicated transformation in order to plot an arbitrary perspective. The good news is, there's a package called [`gg_3D`](https://github.com/AckerDWM/gg3D) (not yet on CRAN), that allows us to make 3D (though not interactive) plots with `ggplot2`; here we can set arbitrary camera perspectives with `theta` and `phi` as in spherical coordinates. This is better than nothing, though it's not very intuitive and takes trial and error to find the best (in my case here, the prettiest) perspective, and you have to restate the `theta` and `phi` for every single layer you add. Another inconvenience with this package right now is that we have to painstakingly adjust the positions of axis labels manually; the package does not automatically place axis labels at the right place when you use non-default perspective. I hope that this will improve in the future. Let me first use `gg3D` to recreate the perspective I used in my [`plotly` post](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/).
 
 ```{r}
