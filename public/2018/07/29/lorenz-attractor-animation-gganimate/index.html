@@ -30,15 +30,15 @@
     
 
     
-    <meta name="description" content="I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.">
-    <meta property="og:description" content="I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.">
+    <meta name="description" content="I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.">
+    <meta property="og:description" content="I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Lorenz attractor animation (gganimate)">
     <meta property="og:url" content="/2018/07/29/lorenz-attractor-animation-gganimate/">
     <meta property="og:site_name" content="From System to System">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="From System to System">
-    <meta name="twitter:description" content="I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.">
+    <meta name="twitter:description" content="I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.">
     
     
 
@@ -246,7 +246,7 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>I have previously written about making the iconic <a href="https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/">Lorenz attractor animation with <code>plotly</code></a>; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of <code>gganimate</code> which implements a <a href="https://www.youtube.com/watch?v=21ZWDrTukEs">grammar of animation</a>, much like the grammar of graphics in <code>ggplot2</code>. In the older version by David Robinson, animation was made by adding and <code>aes</code> called <code>frame</code>. Now it’s just like adding <code>geom_*</code>s, <code>scale_*</code>s, <code>stat_*</code>s, and etc. The new <code>gganimate</code> is not yet on CRAN; you can find it on <a href="https://github.com/thomasp85/gganimate">GitHub</a>. Here I use the new version of <code>ggaminate</code> to make Lorenz attractor animations. Please make sure to have the most up to date version of <code>gganimate</code> installed in order to run the code in this post.</p>
+              <p>I have previously written about making the iconic <a href="https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/">Lorenz attractor animation with <code>plotly</code></a>; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of <code>gganimate</code> which implements a <a href="https://www.youtube.com/watch?v=21ZWDrTukEs">grammar of animation</a>, much like the grammar of graphics in <code>ggplot2</code>. In the older version by David Robinson, animation was made by adding an <code>aes</code> called <code>frame</code>. Now it’s just like adding <code>geom_*</code>s, <code>scale_*</code>s, <code>stat_*</code>s, and etc. The new <code>gganimate</code> is not yet on CRAN; you can find it on <a href="https://github.com/thomasp85/gganimate">GitHub</a>. Here I use the new version of <code>ggaminate</code> to make Lorenz attractor animations. Please make sure to have the most up to date version of <code>gganimate</code> installed in order to run the code in this post.</p>
 <pre class="r"><code>library(ggplot2)
 library(gganimate)
 library(deSolve)
@@ -302,7 +302,9 @@ anim_save(&quot;lorenz_xz.gif&quot;)</code></pre>
 <p>What actually takes up so much disk space is color. Here I’m only using simple colors without gradients, so I can significantly reduce color depth without compromising quality of the gif too much. I did this: <code>-O3</code> compresses the gif by only saving changed portion of the image and reduces the size by using transparency. I chose 16 bit color (8 bit compromises the quality too much), and shrunk the original 480x480 image to 400x400, not too much.</p>
 <pre class="bash"><code>gifsicle lorenz_xz.gif --optimize -O3 --colors 16 --resize 400x400  -o lorenz_xz_small2.gif</code></pre>
 <p>Wow, this shrunk the whopping 71.9 MB image to a much more acceptable 3.3 MB! Here’s the result:</p>
-<p><img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_xz_small2.gif" /></p>
+<center>
+<img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_xz_small2.gif" />
+</center>
 <p>Cool. But wouldn’t it be nice if we can choose an arbitrary camera perspective? In <code>ggplot2</code>, we can only plot how x, y, and z relate to each other; we need to do some sort of complicated transformation in order to plot an arbitrary perspective. The good news is, there’s a package called <a href="https://github.com/AckerDWM/gg3D"><code>gg_3D</code></a> (not yet on CRAN), that allows us to make 3D (though not interactive) plots with <code>ggplot2</code>; here we can set arbitrary camera perspectives with <code>theta</code> and <code>phi</code> as in spherical coordinates. This is better than nothing, though it’s not very intuitive and takes trial and error to find the best (in my case here, the prettiest) perspective, and you have to restate the <code>theta</code> and <code>phi</code> for every single layer you add. Another inconvenience with this package right now is that we have to painstakingly adjust the positions of axis labels manually; the package does not automatically place axis labels at the right place when you use non-default perspective. I hope that this will improve in the future. Let me first use <code>gg3D</code> to recreate the perspective I used in my <a href="https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/"><code>plotly</code> post</a>.</p>
 <pre class="r"><code>ggplot(sol, aes(x = x, y = y, z = z, color = time)) +
   theme_void() +
@@ -326,7 +328,9 @@ anim_save(&quot;lorenz_xz.gif&quot;)</code></pre>
 animate(p2, nframes = 2500, fps = 20)
 anim_save(&quot;lorenz_custom_persp.gif&quot;)</code></pre>
 <p>The resulting gif is 58.8 MB. Again, I compressed the image with <code>gifsicle</code> like I did above and shrunk it into 2.5 MB.</p>
-<p><img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_custom_pers_small.gif" /></p>
+<center>
+<img src="/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_custom_pers_small.gif" />
+</center>
 
               
             </div>
@@ -592,7 +596,7 @@ anim_save(&quot;lorenz_custom_persp.gif&quot;)</code></pre>
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</div>
+              <div class="media-content hide-xs font-merryweather">I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

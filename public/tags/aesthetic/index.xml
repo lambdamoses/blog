@@ -17,7 +17,7 @@
       <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/07/29/lorenz-attractor-animation-gganimate/</guid>
-      <description>I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding and aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</description>
+      <description>I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</description>
     </item>
     
     <item>

@@ -11,7 +11,7 @@ tags:
 thumbnailImage: "img/lorenz_custom_pers_small.gif"
 ---
 
-I have previously written about making the iconic [Lorenz attractor animation with `plotly`](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/); see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of `gganimate` which implements a [grammar of animation](https://www.youtube.com/watch?v=21ZWDrTukEs), much like the grammar of graphics in `ggplot2`. In the older version by David Robinson, animation was made by adding and `aes` called `frame`. Now it's just like adding `geom_*`s, `scale_*`s, `stat_*`s, and etc. The new `gganimate` is not yet on CRAN; you can find it on [GitHub](https://github.com/thomasp85/gganimate). Here I use the new version of `ggaminate` to make Lorenz attractor animations. Please make sure to have the most up to date version of `gganimate` installed in order to run the code in this post.
+I have previously written about making the iconic [Lorenz attractor animation with `plotly`](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/); see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of `gganimate` which implements a [grammar of animation](https://www.youtube.com/watch?v=21ZWDrTukEs), much like the grammar of graphics in `ggplot2`. In the older version by David Robinson, animation was made by adding an `aes` called `frame`. Now it's just like adding `geom_*`s, `scale_*`s, `stat_*`s, and etc. The new `gganimate` is not yet on CRAN; you can find it on [GitHub](https://github.com/thomasp85/gganimate). Here I use the new version of `ggaminate` to make Lorenz attractor animations. Please make sure to have the most up to date version of `gganimate` installed in order to run the code in this post.
 
 ```{r, message=FALSE}
 library(ggplot2)
@@ -89,7 +89,9 @@ gifsicle lorenz_xz.gif --optimize -O3 --colors 16 --resize 400x400  -o lorenz_xz
 
 Wow, this shrunk the whopping 71.9 MB image to a much more acceptable 3.3 MB! Here's the result:
 
+<center>
 ![](/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_xz_small2.gif)
+</center>
 
 Cool. But wouldn't it be nice if we can choose an arbitrary camera perspective? In `ggplot2`, we can only plot how x, y, and z relate to each other; we need to do some sort of complicated transformation in order to plot an arbitrary perspective. The good news is, there's a package called [`gg_3D`](https://github.com/AckerDWM/gg3D) (not yet on CRAN), that allows us to make 3D (though not interactive) plots with `ggplot2`; here we can set arbitrary camera perspectives with `theta` and `phi` as in spherical coordinates. This is better than nothing, though it's not very intuitive and takes trial and error to find the best (in my case here, the prettiest) perspective, and you have to restate the `theta` and `phi` for every single layer you add. Another inconvenience with this package right now is that we have to painstakingly adjust the positions of axis labels manually; the package does not automatically place axis labels at the right place when you use non-default perspective. I hope that this will improve in the future. Let me first use `gg3D` to recreate the perspective I used in my [`plotly` post](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/).
 
@@ -122,4 +124,6 @@ anim_save("lorenz_custom_persp.gif")
 
 The resulting gif is 58.8 MB. Again, I compressed the image with `gifsicle` like I did above and shrunk it into 2.5 MB.
 
+<center>
 ![](/post/2018-07-29-lorenz-attractor-animation-gganimate_files/lorenz_custom_pers_small.gif)
+</center>
