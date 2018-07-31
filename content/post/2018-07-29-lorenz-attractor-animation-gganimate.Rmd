@@ -8,7 +8,7 @@ categories:
 tags:
   - aesthetic
   - math
-thumbnailImage: "img/lorenz_custom_persp.gif"
+thumbnailImage: "img/lorenz_custom_pers_small.gif"
 ---
 
 I have previously written about making the iconic [Lorenz attractor animation with `plotly`](https://fromsystosys.netlify.com/2018/07/28/lorenz-attractor-animation-plotly/); see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented presented the brand new version of `gganimate` which implements a [grammar of animation](https://www.youtube.com/watch?v=21ZWDrTukEs), much like the grammar of graphics in `ggplot2`. In the older version by David Robinson, animation was made by adding and `aes` called `frame`. Now it's just like adding `geom_*`s, `scale_*`s, `stat_*`s, and etc. The new `gganimate` is not yet on CRAN; you can find it on [GitHub](https://github.com/thomasp85/gganimate). Here I use the new version of `ggaminate` to make Lorenz attractor animations. Please make sure to have the most up to date version of `gganimate` installed in order to run the code in this post.
