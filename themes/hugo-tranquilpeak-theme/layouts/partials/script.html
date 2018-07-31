@@ -18,17 +18,7 @@
   {{ end }}
 {{ end }}
 {{ if eq .Site.Params.syntaxHighlighter "highlight.js" }}
-<script>
-$(document).ready(function() {
-  hljs.configure({ classPrefix: '', useBR: false, languages: ['r', 'bash', 'python', 'c++'] });
-  $('pre.code-highlight > code, pre > code').each(function(i, block) {
-    if (!$(this).hasClass('codeblock')) {
-      $(this).addClass('codeblock');
-    }
-    hljs.highlightBlock(block);
-  });
-});
-</script>
+
 {{ end }}
 {{ if .IsPage }}
   {{ if not (eq .Params.comments false) }}

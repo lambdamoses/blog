@@ -91,6 +91,10 @@
   
 </header>
 
+<link rel="stylesheet" href="/css/atom-one-light.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
       <nav id="sidebar" data-behavior="1">
   <div class="sidebar-container">
     
@@ -391,48 +395,6 @@
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2018/07/30/code-rendering-reprex-2/">
-                <h3 class="media-heading">Code rendering reprex 2</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">See if the code rendering error is only in Rmd
-# Something library(ggplot2)  For ggplot2
-foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo  The example that works
-# A proper comment x &lt;- seq(0,1,0.02) x  for (i in 1:10) { cat(i, &quot;\n&quot;) }  The code did render properly in markdown, except there&rsquo;s no code highlighting. Anyway, I don&rsquo;t care, since I do want to run my code.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/07/30/render-error-reprex/">
-                <h3 class="media-heading">Render error reprex</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This is to demonstrate how code highlighting doesn’t work:
-Comments not highlighted properly when I use message = FALSE
-# something library(ggplot2) The foo is moved all the way down here
-foo &lt;- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() foo Probably this has something to do with ggplot2
-bar &lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wrong in this example:
-# A proper comment x &lt;- seq(0,1,0.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
               <a class="link-unstyled" href="/2018/07/29/lorenz-attractor-animation-gganimate/">
                 <h3 class="media-heading">Lorenz attractor animation (gganimate)</h3>
               </a>
@@ -489,7 +451,7 @@ bar &lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wr
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         5 posts found
+         3 posts found
       </p>
     </div>
   </div>
@@ -504,26 +466,12 @@ bar &lt;- qplot(Sepal.Length, Sepal.Width, data = iris) bar There’s nothing wr
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
 <script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
 
 
-
-<script>
-$(document).ready(function() {
-  hljs.configure({ classPrefix: '', useBR: false });
-  $('pre.code-highlight > code, pre > code').each(function(i, block) {
-    if (!$(this).hasClass('codeblock')) {
-      $(this).addClass('codeblock');
-    }
-    hljs.highlightBlock(block);
-  });
-});
-</script>
 
 
 
