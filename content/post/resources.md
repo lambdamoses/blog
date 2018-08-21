@@ -10,7 +10,7 @@ slug: resources
 thumbnailImage: "img/20170718_113538.jpg"
 ---
 
-Here are some resources on dialogues between science and religion across faiths that I found helpful. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.k.a. the conflict thesis), this does not imply a bias in favor of religion. Historians of science have discredited the conflict thesis in recent decades, though this development have not gone far beyond the academia. In fact, some of the most well-known scholars in this field, who are not fans of the conflict thesis, such as Michael Ruse, Ronald Numbers, and Paul Davies, are not religious.
+Here are some resources on dialogues between science and religion across faiths that I found helpful. There are more sites on science and religion than are listed here; I only chose the ones I find helpful, and this list will continue to grow as I discover more resources. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.k.a. the conflict thesis), this does not imply a bias in favor of religion. Historians of science have discredited the conflict thesis in recent decades, though this development have not gone far beyond the academia. In fact, some of the most well-known scholars in this field, who are not fans of the conflict thesis, such as Michael Ruse, Ronald Numbers, and Paul Davies, are not religious.
 
 Christian resources are over-represented, and some of the interfaith resources also seem to have spme Christian slant as Christians seem to write more on this topics than people of other faiths. Honestly, it's much more difficult to find resources on science and religion outside Christian institutions. Why? Here are some of my speculations:
 
@@ -34,6 +34,8 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [The Special Divine Action Project](https://sda.bodleian.ox.ac.uk/sda/#!/?section=1&bucket=1&tab=1) Oxford project on how God acts in the world from perspectives across faiths and disciplins.
 
+[Abraham Kuyper Center](http://www.abrahamkuypercenter.nl) This is center at Vrije Universiteit Amsterdam, which aims to reflect on the big questions science raises. The projects at this center are not all about science and religion; there're some reflections on the humanities in general, but these can be relevant to theology since theology also belongs to the humanities. There was a project [Science beyond Scientism](http://www.abrahamkuypercenter.nl/science-beyond-scientism/) at this center, and a list of publications from this project is available on the website; some of the publications are directly related to science and religiono.
+
 #### Christianity
 [BioLogos](https://biologos.org) Website of organization founded by [Francis Collins](https://www.nih.gov/about-nih/who-we-are/nih-director) to answer questions on Christianity and the theory of evolution. Now it also has blog posts on this topic and its own conference.
 
@@ -49,8 +51,26 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [Science and Faith Examined](http://www.scienceandfaithexamined.org) Caltech student events with invited speakers on central issues in science and religion. Videos of past events are available online.
 
+[The Veritas Forum](http://www.veritas.org) A program that started in Harvard and has spreaded to many other universities in the US and Europe that invites both Christian and non-Christian speakers to discuss big questions related to Christianity. The topics are not necessarily related to science, but some of them are, and it's good to think through those big questions in general since they matter to how we live our lives and make sense of the world. The forums are held annually in some universities (they're not that frequent), and the audio or video recordings of the forums are available on the website. Transcripts are not available, but there're written posts on the website as well.
+
+[Musings on Science and Theology](https://musingsonscience.wordpress.com) Blog by a Christian chemistry professor, with thoughtful articles and book reviews.
+
+[Science Meets Faith](https://sciencemeetsfaith.wordpress.com) Blog mainly on how scientists and theologians in history think about science and faith.
+
+[Society of Catholic Scientists](https://www.catholicscientists.org) The science and religion dialogue seems to be dominated by Protestants, but Catholics are standing up and have their voices heard. This website has interesting video recordings of the Society's conferences, which is a great resource.
+
+[Science and Belief](https://scienceandbelief.org) The field of study called "science and religion" is really mostly theology, philosophy, and anthropology; it's very different from science. But scientists of faith do have something to contribute to the dialogue. This is a blog by former biologist Ruth Bancewicz (now at the Faraday Institute), featuring more of the perspectives of scientists, such as wonders of nature. She also wrote a book [God in the Lab](https://www.goodreads.com/book/show/23217941-god-in-the-lab), which is about how science enhances faith in practice. This is a helpful perspectice, since the field science and religion is dominated by how science and religion interact in theory, though practice is central to both science and religion.
+
+[Thomas Jay Oord](http://thomasjayoord.com/index.php/category/theology_and_science) Theologian and philosopher who argues for [process theology](https://plato.stanford.edu/entries/process-theism/). I don't mean that I embrace process theology (still need to do more research before I decide), but how God relates to the world is an important subfield within science and religion. Process theology and panentheism are towards the liberal end of a spectrum of models relating God and the world (the conservative end is classical theism); they're considered unorthodox by some, but unorthodox perspectives can be very thought provoking.
+
+[Philip Clayton](http://philipclayton.net) Theologian who supports [panentheism](https://plato.stanford.edu/entries/panentheism/), which is another model on how God relates to the world. Yeah, a way I find out more websites for science and religion is to google the authors of science and religion papers I read; if the author has a website, then it probably is a thought provoking resource.
+
+[Test of Faith](http://www.testoffaith.com) Accessible course, book, and movie and associated resources on science and Christianity.
+
 #### Islam
 [Islam & Science](http://islam-science.net) Interesting articles on Islam, science, and philosophy
+
+[Renovatio: The Journal of Zeytuna College](https://renovatio.zaytuna.edu) Zeytuna college is the first Muslim liberal arts college in the US. The journal Renovatio explores big questions related to faith (not just Islam; some authors are Christian), philosophy, and modernity; some articles are about science and religion. 
 
 #### Judaism
 [Sinai and Synapses](http://sinaiandsynapses.org) Interesting articles and videos on Judaism and science
@@ -67,10 +87,12 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [Religion vs. Science: What Religious People Really Think](https://www.goodreads.com/book/show/34371262-religion-vs-science) by Elaine Howard Ecklund. This is a more recent study by Dr. Ecklund involving an online survey and in depth interviews in places of worship. This book debunks myths and stereotypes about religious people in the US, such as that religious people are not interested in science. 
 
+[The Experience of God: Being, Consciousness, Bliss](https://www.goodreads.com/book/show/21874723-the-experience-of-god) by David Bentley Hart (Eastern Orthodox theologian, University of Notre Dame fellow). There's a wide variety of views on science and religion even within Christianity; I just listed resources on process theology and panentheism, and this one is on classical theism. This book aims to define the word "God" from the perspective of classical theism, and draws from mystical traditions from major religions around the world. It's not intended to be about science and religion, but it does discuss many issues in science and religion, such as naturalism, how God relates to the world, consciousness, and relations between evolution and morality and aesthetics. God is so much beyond our feeble human minds that we can never give a comprehensive definition of God, but at least believers should have a better sense of what they believe in, and non-believers should have a better sense of what they don't believe in; most theists don't believe in the kind of god that Richard Dawkins doesn't believe in anyway.
+
 #### Christianity
 [The Language of God](https://www.goodreads.com/book/show/35506.The_Language_of_God) by Francis Collins. This book is not very in depth or philosophical, but is a good and common place to get started. It describes Francis Collins' journey from atheism to Christianity, and it easy to read.
 
-[Monopolizing Knowledge: A Scientist Refutes Religion-Denying, Reason-Destroying Scientists](https://www.goodreads.com/book/show/13171530-monopolizing-knowledge) by Ian Hutchinson (MIT physicist). This book present resons against scientism, a belief that science is the only valid path to knowledge.
+[Monopolizing Knowledge: A Scientist Refutes Religion-Denying, Reason-Destroying Scientists](https://www.goodreads.com/book/show/13171530-monopolizing-knowledge) by Ian Hutchinson (MIT physicist). This book present reasons against scientism, a belief that science is the only valid path to knowledge.
 
 #### Islam
 [Islam's Quantum Question: Reconciling Muslim Tradition and Modern Science](https://www.goodreads.com/book/show/8614056-islam-s-quantum-question) by Nidhal Guessoum (American University of Sharjah astrophysicist). This book summarizes issues unique to relationships between Islam and science, such as Creationism in the Islamic world and development of various strands of "Islamic science" and why they are problematic. 
