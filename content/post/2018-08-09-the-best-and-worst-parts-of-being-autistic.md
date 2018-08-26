@@ -32,7 +32,7 @@ I have a very nerdy sense of humor.
 I use socializing time well to discuss important and deep questions.
 
 ## The worst parts
-Meanwhile, there're challenged caused by autism:
+Meanwhile, there're challenges caused by autism:
 
 Social interactions are challenging and exhausting. Though I like talking about research and big, deep questions with others (as a result, I can only make friends with people who share my interests), small talk is difficult. I just don't understand why people would socialize just for the sake of socializing; for me, socializing is for collaboration and exchange of valuable information, and as a result, it's challenging to get friendships beyond the common interest. Over time, I developed a list of topics for small talk, but this doesn't address all the challenges, since in computer terms, small talk takes very high CPU load, and eventually may cause the blue screen of death if I push myself too hard (I mean shutdown or meltdown[^3]). Furthermore, I haven't really worked on body language; that's simply too much.
 

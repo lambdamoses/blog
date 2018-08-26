@@ -36,6 +36,8 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [Abraham Kuyper Center](http://www.abrahamkuypercenter.nl) This is center at Vrije Universiteit Amsterdam, which aims to reflect on the big questions science raises. The projects at this center are not all about science and religion; there're some reflections on the humanities in general, but these can be relevant to theology since theology also belongs to the humanities. There was a project [Science beyond Scientism](http://www.abrahamkuypercenter.nl/science-beyond-scientism/) at this center, and a list of publications from this project is available on the website; some of the publications are directly related to science and religion.
 
+[The Gifford Lectures](https://www.giffordlectures.org) Prestegious lectures on natural theology. In short, [natural theology](https://plato.stanford.edu/entries/natural-theology/) means understanding God only from reason and nature, independently from revelation, though the definitions of natural theology is quite contentious and complex. The lectures in fact cover a wide range of topics in science and religion, not just natural theology in the conventional sense.
+
 #### Christianity
 [BioLogos](https://biologos.org) Website of organization founded by [Francis Collins](https://www.nih.gov/about-nih/who-we-are/nih-director) to answer questions on Christianity and the theory of evolution. Now it also has blog posts on this topic and its own conference.
 
