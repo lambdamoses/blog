@@ -74,10 +74,14 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [Renovatio: The Journal of Zeytuna College](https://renovatio.zaytuna.edu) Zeytuna college is the first Muslim liberal arts college in the US. The journal Renovatio explores big questions related to faith (not just Islam; some authors are Christian), philosophy, and modernity; some articles are about science and religion. 
 
+[Kalam Research & Media](https://www.kalamresearch.com) Think tank dedicated to Islamic philosophy. The website has some interesting articles and monographs on science and religion. This organization has also published books (mainly in philosophy, but some issues are relevant to science and religion), but some of them are in Arabic.
+
+[Muslim Science](http://muslim-science.com) Websites with news on science, technology, and science policy in the Islamic world. There're more philosophical essays on science and religion (see [Task Force on Islam and Science](http://muslim-science.com/initiatives/islam-and-science/)), though the website focuses on news.
+
 #### Judaism
 [Sinai and Synapses](http://sinaiandsynapses.org) Interesting articles and videos on Judaism and science
 
-[The Institute for Science and Judaism](http://www.scienceandjudaism.org) Some interesting videos; they also have a blog, but it has not been updated since 2013.
+[The Institute for Science and Judaism](http://www.scienceandjudaism.org) Some interesting videos; they also have a blog, but it has not been updated since 2013. 
 
 ### Books
 #### Interfaith
