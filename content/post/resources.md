@@ -40,6 +40,8 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [The Big Questions in Science and Religion short course on ebrary.net](https://ebrary.net/4687/religion/the_big_questions_in_science_and_religion) This is the material for a short course written by anonymous authors. Honestly, I find this website somewhat mysterious, since it doesn't have an about page and the articles don't have names of authors. But some of the articles give good summaries of viewpoints of big questions in science and religion. It seems that some of the articles here are written by atheists, but at least they show some knowledge of philosophy. I find articles arguing for what I disagree in more thought provoking, since I have to think more to figure out how to refute the arguments, though reading those articles is stressful.
 
+[The New Atlantis](https://www.thenewatlantis.com) Quarterly journal to improve public understanding of the social, political, ethical, and policy implications of modern science and technology. Some articles in this journal, especially those in the category science and philosophy, address questions in science and religion, such as scientism, whether neurobiology explains away free will, purpose in evolution, and etc. Many articles in this journal reflect on modern technology. The articles can be freely accessed online, but hard copies are also available.
+
 #### Christianity
 [BioLogos](https://biologos.org) Website of organization founded by [Francis Collins](https://www.nih.gov/about-nih/who-we-are/nih-director) to answer questions on Christianity and the theory of evolution. Now it also has blog posts on this topic and its own conference.
 
