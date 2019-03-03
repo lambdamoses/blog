@@ -76,7 +76,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   name = "About"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-question\"></i>"
   url = "/#about"
-
+  
 [[menu.links]]
   weight = 1
   identifier = "github"
@@ -88,10 +88,16 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   identifier = "stackoverflow"
   name = "Stack Overflow"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-stack-overflow\"></i>"
-  url = "https://stackoverflow.com/users/8916916/dongyi-lu"
+  url = "https://stackoverflow.com/users/8916916/lambda-moses"
 
 [[menu.misc]]
   weight = 1
+  identifier = "blogroll"
+  name = "Blogroll"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-link\"></i>"
+  url = "/2019/03/02/r-blogs-i-follow"
+[[menu.misc]]
+  weight = 2
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"

@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>R blogs I follow</title>
+      <link>/2019/03/02/r-blogs-i-follow/</link>
+      <pubDate>Sat, 02 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/03/02/r-blogs-i-follow/</guid>
+      <description>This page is about R resources. I also have a list of resources about dialogues between science and religion.
+One of my favorite aspects of R is the vibrant R community. A way to learn from the community - new tools, cool efficient tricks, something to note about data analysis - is reading blog posts. Actually, I learnt parallel programming in R entirely from blog posts. These are the R blogs I follow:</description>
+    </item>
+    
+    <item>
       <title>When principal component is not unique</title>
       <link>/2019/03/02/when-principal-component-is-not-unique/</link>
       <pubDate>Sat, 02 Mar 2019 00:00:00 +0000</pubDate>

@@ -8,6 +8,8 @@ tags:
   - links
 slug: resources
 thumbnailImage: "img/20170718_113538.jpg"
+coverImage: "https://res.cloudinary.com/lambdamoses/image/upload/v1551598366/20170718_152532.jpg"
+coverMeta: out
 ---
 
 Here are some resources on dialogues between science and religion across faiths that I found helpful. There are many more websites and books on science and religion than are listed here; I only chose the ones I find the most helpful, and this list will continue to grow as I discover more resources. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.k.a. the conflict thesis), this does not imply a bias in favor of religion. Historians of science have discredited the conflict thesis in recent decades, though this development have not gone far beyond the academia. In fact, some of the most well-known scholars in this field, who are not fans of the conflict thesis, such as Michael Ruse, Ronald Numbers, and Paul Davies, are not religious. Also note that I don't necessarily agree with all those resources.
@@ -106,10 +108,14 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [Monopolizing Knowledge: A Scientist Refutes Religion-Denying, Reason-Destroying Scientists](https://www.goodreads.com/book/show/13171530-monopolizing-knowledge) by Ian Hutchinson (MIT physicist). This book present reasons against scientism, a belief that science is the only valid path to knowledge.
 
+[Can a Scientist Believe in Mirables?](https://www.goodreads.com/book/show/40164801-can-a-scientist-believe-in-miracles) by Ian Hutchinson. This book answers FAQs about science and Christianity, debunking the popular perception that faith can only be intellectually dishonest.
+
 #### Islam
 [Islam's Quantum Question: Reconciling Muslim Tradition and Modern Science](https://www.goodreads.com/book/show/8614056-islam-s-quantum-question) by Nidhal Guessoum (American University of Sharjah astrophysicist). This book summarizes issues unique to relationships between Islam and science, such as Creationism in the Islamic world and development of various strands of "Islamic science" and why they are problematic. 
 
 [Philosophy in the Islamic World](https://www.goodreads.com/book/show/29940298-philosophy-in-the-islamic-world) by Peter Adamson. This is not about science and religion per se, but central issues in science and religion have already been discussed by philosophers before the advent of modern science. Issues discussed in this book are relationships between religion and reason (in both Islam and Judaism), natural theology, and some history of science, with precursors to ideas in the scientific revolution.
+
+_About the cover photo: Psalm 111:2 at the main entrance to the new location of the Cavendish Laboratory built in the 1970s. The original Cavendish Laboratory (from the 19th centurry) has the Latin version at the entrance, carved at the instigation of James Clark Maxwell._
 
 [^1]: See a paper on how American Muslims and Jews view science and religion: http://journals.sagepub.com/doi/abs/10.1177/0037768616664473
 [^2]: https://onlinelibrary.wiley.com/doi/abs/10.1111/zygo.12352
