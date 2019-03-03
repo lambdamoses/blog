@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2019/03/03/color-palettes-inspired-by-islamic-art/</loc>
+    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2019/03/02/r-blogs-i-follow/</loc>
     <lastmod>2019-03-02T00:00:00+00:00</lastmod>
   </url>
@@ -67,13 +72,19 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-03-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/gganimate/</loc>
     <lastmod>2019-03-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/graphics/</loc>
+    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -91,13 +102,13 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-03-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2019-03-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
