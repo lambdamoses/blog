@@ -1,0 +1,77 @@
+---
+title: When principal component is not unique
+author: Lambda Moses
+date: '2019-03-02'
+slug: when-principal-component-is-not-unique
+categories:
+  - R
+tags:
+  - gganimate
+  - stats
+keywords:
+  - tech
+thumbnailImage: "img/circle_pca_static.png"
+---
+
+
+
+<p>This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).</p>
+<p>On the midterm, there was a problem asking students to give an example of 8 points in <span class="math inline">\(\mathbb{R}^2\)</span> that do not have a unique 1 dimensional principal component projection. Hmm, interesting. Never thought about that. But when I did think about it, it’s actually not hard: One way to view PCA is to find an orthonormal projection onto an affine subspace that maximizes the preserved sample variance. Then in 1 dimensional PCA, we find a line to maximize the variance of the projection of the 2 dimensional data onto that line. This line is not unique when the 2D data has rotational symmetry, so there are more than one lines that give the same maximal variance in the projection. Presumably this does not happen very often in real data, but it’s a good way to step back and think about what PCA really does.</p>
+<p>An example is when the 8 points are evenly distributed on a circle. Now <code>gganimate</code>, a package for animation working seamlessly with <code>ggplot2</code>, is on CRAN. In this blog post, I use <code>gganimate</code> to demonstrate how we can rotate the principal component without changing variance explained. I also heavily facilitate the Tidyverse framework to make this animation.</p>
+<pre class="r"><code>library(tidyverse)
+library(gganimate)
+theme_set(theme_bw())</code></pre>
+<p>Here I generate 8 points distributed evenly on the unit circle.</p>
+<pre class="r"><code>circle &lt;- tibble(theta = pi * seq(0, 7/4, length.out = 8),
+                 x = cos(theta),
+                 y = sin(theta))
+ggplot(circle, aes(x, y)) +
+  geom_point() +
+  coord_equal()</code></pre>
+<p><img src="/post/2019-03-02-when-principal-component-is-not-unique_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>We see that any line passing through the origin and one of the 8 points can be the space spanned by the principal component. To verify:</p>
+<pre class="r"><code>prcomp(circle[, c(&quot;x&quot;, &quot;y&quot;)])</code></pre>
+<pre><code>#&gt; Standard deviations (1, .., p=2):
+#&gt; [1] 0.7559289 0.7559289
+#&gt; 
+#&gt; Rotation (n x k) = (2 x 2):
+#&gt;   PC1 PC2
+#&gt; x  -1   0
+#&gt; y   0  -1</code></pre>
+<p>The two principal components span the x axis and the y axis respectively, with the same variance explained. Due to symmetry, <span class="math inline">\(y = x\)</span> should also have the same variance explained, so is <span class="math inline">\(y = -x\)</span>.</p>
+<p>Then I want to project these points on different lines passing through the origin, so I write a function the generate the projections in <span class="math inline">\(\mathbb R^2\)</span>.</p>
+<pre class="r"><code># For projection matrix multiplication
+circle_mat &lt;- as.matrix(circle[, c(&quot;x&quot;, &quot;y&quot;)])</code></pre>
+<pre class="r"><code># x, y: x and y coordinates of unit vector on which points are to be projected
+# m: matrix with columns x and y, coordinates of points to be projected
+# Output: Tibble with colums x_proj and y_proj, the x and y coordinates of projected points
+project_pts &lt;- function(x, y, m) {
+  # Projection matrix
+  new_basis &lt;- c(x, y)
+  P &lt;- new_basis %*% t(new_basis)
+  # Projection
+  proj &lt;- m %*% t(P)
+  colnames(proj) &lt;- c(&quot;x_proj&quot;, &quot;y_proj&quot;)
+  return(as_tibble(proj))
+}</code></pre>
+<p>Now I project each of the 8 points to each version of the principal component, each spans a line passing through the origin and one of the 8 points on the circle.</p>
+<pre class="r"><code># Do the projection
+projections &lt;- circle %&gt;% 
+  mutate(group = seq_along(theta),
+         projs = map2(x, y, project_pts, m = circle_mat),
+         # Original point corresponding to projected coordinates
+         origs = map(theta, ~ setNames(circle[, c(&quot;x&quot;, &quot;y&quot;)], c(&quot;x_orig&quot;, &quot;y_orig&quot;)))) %&gt;% 
+  rename(theta_proj = theta) %&gt;% 
+  select(-x, -y) %&gt;% 
+  unnest(projs, origs)</code></pre>
+<p>Time to animate! The <code>group</code> aesthetics here is to prevent interpolation between states, which obscures the fact that the projections are the same thing rotated.</p>
+<pre class="r"><code>ggplot(projections, aes(x_proj, y_proj)) +
+  geom_line(aes(group = group), size = 0.3) +
+  geom_segment(aes(xend = x_orig, yend = y_orig, group = group), 
+               linetype = 2, color = &quot;gray&quot;) +
+  geom_point(aes(group = group), shape = 8, color = &quot;cornflowerblue&quot;) +
+  transition_states(theta_proj) +
+  geom_point(data = circle, aes(x, y)) +
+  coord_equal()</code></pre>
+<p><img src="/post/2019-03-02-when-principal-component-is-not-unique_files/figure-html/unnamed-chunk-7-1.gif" /><!-- --></p>
+<p>Indeed, it looks like the whole thing is a rotating rigid body.</p>

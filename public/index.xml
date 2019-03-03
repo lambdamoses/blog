@@ -6,10 +6,20 @@
     <description>Recent content on From System to System</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 15 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>When principal component is not unique</title>
+      <link>/2019/03/02/when-principal-component-is-not-unique/</link>
+      <pubDate>Sat, 02 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/03/02/when-principal-component-is-not-unique/</guid>
+      <description>This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).
+On the midterm, there was a problem asking students to give an example of 8 points in \(\mathbb{R}^2\) that do not have a unique 1 dimensional principal component projection.</description>
+    </item>
     
     <item>
       <title>My Favorite and Least Favorite Aspects of R</title>

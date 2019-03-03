@@ -5,7 +5,7 @@ date: '2018-07-28'
 categories:
   - R
 tags:
-  - aesthetic
+  - animation
   - math
 slug: lorenz-attractor-animation-plotly
 thumbnailImage: "img/lorenz.png"

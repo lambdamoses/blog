@@ -1,0 +1,747 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.53 with theme Tranquilpeak 0.4.3-BETA">
+    <title>When principal component is not unique</title>
+    <meta name="author" content="Lambda Moses">
+    <meta name="keywords" content="tech">
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+    <meta name="description" content="This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).
+On the midterm, there was a problem asking students to give an example of 8 points in \(\mathbb{R}^2\) that do not have a unique 1 dimensional principal component projection.">
+    <meta property="og:description" content="This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).
+On the midterm, there was a problem asking students to give an example of 8 points in \(\mathbb{R}^2\) that do not have a unique 1 dimensional principal component projection.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="When principal component is not unique">
+    <meta property="og:url" content="/2019/03/02/when-principal-component-is-not-unique/">
+    <meta property="og:site_name" content="From System to System">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="From System to System">
+    <meta name="twitter:description" content="This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).
+On the midterm, there was a problem asking students to give an example of 8 points in \(\mathbb{R}^2\) that do not have a unique 1 dimensional principal component projection.">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
+    
+
+    
+      <meta property="og:image" content="/img/circle_pca_static.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-124557538-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">From System to System</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+<link rel="stylesheet" href="/css/atom-one-light.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Lambda Moses</h4>
+        
+          <h5 class="sidebar-profile-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lambdamoses">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/8916916/dongyi-lu">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      When principal component is not unique
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-03-02T00:00:00Z">
+        
+  March 2, 2019
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+
+<p>This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).</p>
+<p>On the midterm, there was a problem asking students to give an example of 8 points in <span class="math inline">\(\mathbb{R}^2\)</span> that do not have a unique 1 dimensional principal component projection. Hmm, interesting. Never thought about that. But when I did think about it, it’s actually not hard: One way to view PCA is to find an orthonormal projection onto an affine subspace that maximizes the preserved sample variance. Then in 1 dimensional PCA, we find a line to maximize the variance of the projection of the 2 dimensional data onto that line. This line is not unique when the 2D data has rotational symmetry, so there are more than one lines that give the same maximal variance in the projection. Presumably this does not happen very often in real data, but it’s a good way to step back and think about what PCA really does.</p>
+<p>An example is when the 8 points are evenly distributed on a circle. Now <code>gganimate</code>, a package for animation working seamlessly with <code>ggplot2</code>, is on CRAN. In this blog post, I use <code>gganimate</code> to demonstrate how we can rotate the principal component without changing variance explained. I also heavily facilitate the Tidyverse framework to make this animation.</p>
+<pre class="r"><code>library(tidyverse)
+library(gganimate)
+theme_set(theme_bw())</code></pre>
+<p>Here I generate 8 points distributed evenly on the unit circle.</p>
+<pre class="r"><code>circle &lt;- tibble(theta = pi * seq(0, 7/4, length.out = 8),
+                 x = cos(theta),
+                 y = sin(theta))
+ggplot(circle, aes(x, y)) +
+  geom_point() +
+  coord_equal()</code></pre>
+<p><img src="/post/2019-03-02-when-principal-component-is-not-unique_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>We see that any line passing through the origin and one of the 8 points can be the space spanned by the principal component. To verify:</p>
+<pre class="r"><code>prcomp(circle[, c(&quot;x&quot;, &quot;y&quot;)])</code></pre>
+<pre><code>#&gt; Standard deviations (1, .., p=2):
+#&gt; [1] 0.7559289 0.7559289
+#&gt; 
+#&gt; Rotation (n x k) = (2 x 2):
+#&gt;   PC1 PC2
+#&gt; x  -1   0
+#&gt; y   0  -1</code></pre>
+<p>The two principal components span the x axis and the y axis respectively, with the same variance explained. Due to symmetry, <span class="math inline">\(y = x\)</span> should also have the same variance explained, so is <span class="math inline">\(y = -x\)</span>.</p>
+<p>Then I want to project these points on different lines passing through the origin, so I write a function the generate the projections in <span class="math inline">\(\mathbb R^2\)</span>.</p>
+<pre class="r"><code># For projection matrix multiplication
+circle_mat &lt;- as.matrix(circle[, c(&quot;x&quot;, &quot;y&quot;)])</code></pre>
+<pre class="r"><code># x, y: x and y coordinates of unit vector on which points are to be projected
+# m: matrix with columns x and y, coordinates of points to be projected
+# Output: Tibble with colums x_proj and y_proj, the x and y coordinates of projected points
+project_pts &lt;- function(x, y, m) {
+  # Projection matrix
+  new_basis &lt;- c(x, y)
+  P &lt;- new_basis %*% t(new_basis)
+  # Projection
+  proj &lt;- m %*% t(P)
+  colnames(proj) &lt;- c(&quot;x_proj&quot;, &quot;y_proj&quot;)
+  return(as_tibble(proj))
+}</code></pre>
+<p>Now I project each of the 8 points to each version of the principal component, each spans a line passing through the origin and one of the 8 points on the circle.</p>
+<pre class="r"><code># Do the projection
+projections &lt;- circle %&gt;% 
+  mutate(group = seq_along(theta),
+         projs = map2(x, y, project_pts, m = circle_mat),
+         # Original point corresponding to projected coordinates
+         origs = map(theta, ~ setNames(circle[, c(&quot;x&quot;, &quot;y&quot;)], c(&quot;x_orig&quot;, &quot;y_orig&quot;)))) %&gt;% 
+  rename(theta_proj = theta) %&gt;% 
+  select(-x, -y) %&gt;% 
+  unnest(projs, origs)</code></pre>
+<p>Time to animate! The <code>group</code> aesthetics here is to prevent interpolation between states, which obscures the fact that the projections are the same thing rotated.</p>
+<pre class="r"><code>ggplot(projections, aes(x_proj, y_proj)) +
+  geom_line(aes(group = group), size = 0.3) +
+  geom_segment(aes(xend = x_orig, yend = y_orig, group = group), 
+               linetype = 2, color = &quot;gray&quot;) +
+  geom_point(aes(group = group), shape = 8, color = &quot;cornflowerblue&quot;) +
+  transition_states(theta_proj) +
+  geom_point(data = circle, aes(x, y)) +
+  coord_equal()</code></pre>
+<p><img src="/post/2019-03-02-when-principal-component-is-not-unique_files/figure-html/unnamed-chunk-7-1.gif" /><!-- --></p>
+<p>Indeed, it looks like the whole thing is a rotating rigid body.</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/gganimate/">gganimate</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/stats/">stats</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/" data-tooltip="My Favorite and Least Favorite Aspects of R">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2019/03/02/when-principal-component-is-not-unique/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2019/03/02/when-principal-component-is-not-unique/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2019/03/02/when-principal-component-is-not-unique/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2019 Lambda Moses. All Rights Reserved
+  </span>
+</footer>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/" data-tooltip="My Favorite and Least Favorite Aspects of R">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2019/03/02/when-principal-component-is-not-unique/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2019/03/02/when-principal-component-is-not-unique/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2019/03/02/when-principal-component-is-not-unique/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2019%2F03%2F02%2Fwhen-principal-component-is-not-unique%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2019%2F03%2F02%2Fwhen-principal-component-is-not-unique%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2019%2F03%2F02%2Fwhen-principal-component-is-not-unique%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Lambda Moses</h4>
+    
+      <div id="about-card-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        graduate student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Los Angeles
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/03/02/when-principal-component-is-not-unique/">
+                <h3 class="media-heading">When principal component is not unique</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).
+On the midterm, there was a problem asking students to give an example of 8 points in \(\mathbb{R}^2\) that do not have a unique 1 dimensional principal component projection.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/">
+                <h3 class="media-heading">My Favorite and Least Favorite Aspects of R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/08/09/the-best-and-worst-parts-of-being-autistic/">
+                <h3 class="media-heading">The Best and Worst Parts of Being Autistic</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Aug 8, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have debated for a while whether I should write this post. Eventually I decided to write it, since first, even if it may harm my opportunities of employment after I graduate, I don&rsquo;t want to work with someone who discriminates against autistics anyway because passing as neurotypical is very stressful; I need to reserve my energy for the real cool work. Second, we need to make the positive aspects of autism more well-known to reduce discrimination and increase acceptance.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/29/lorenz-attractor-animation-gganimate/">
+                <h3 class="media-heading">Lorenz attractor animation (gganimate)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/28/lorenz-attractor-animation-plotly/">
+                <h3 class="media-heading">Lorenz attractor animation (Plotly)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is the first post in this blog.
+## [1] &quot;Hello World!&quot; Once for a class assignment, we were asked to control the Lorenz system. The instructor recommended us to use MATLAB for assignments, but since I’m inexperienced in MATLAB, I decided to use R to do the assignments, and used the package plotly to make interactive 3D plots of phase portraits1 of the Lorenz system.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/28/resources/">
+                <h3 class="media-heading">Resources for science and religion</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Here are some resources on dialogues between science and religion across faiths that I found helpful. There are many more websites and books on science and religion than are listed here; I only chose the ones I find the most helpful, and this list will continue to grow as I discover more resources. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         6 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://res.cloudinary.com/lambdamoses/image/upload/v1532889849/20171105_155503.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2019\/03\/02\/when-principal-component-is-not-unique\/';
+          
+            this.page.identifier = '\/2019\/03\/02\/when-principal-component-is-not-unique\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'fromsystosys';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

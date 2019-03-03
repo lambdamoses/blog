@@ -1,0 +1,98 @@
+---
+title: When principal component is not unique
+author: Lambda Moses
+date: '2019-03-02'
+slug: when-principal-component-is-not-unique
+categories:
+  - R
+tags:
+  - gganimate
+  - stats
+keywords:
+  - tech
+thumbnailImage: "img/circle_pca_static.png"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  fig.height = 4
+)
+```
+
+This quarter, I'm TAing my adviser's class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA). 
+
+On the midterm, there was a problem asking students to give an example of 8 points in $\mathbb{R}^2$ that do not have a unique 1 dimensional principal component projection. Hmm, interesting. Never thought about that. But when I did think about it, it's actually not hard: One way to view PCA is to find an orthonormal projection onto an affine subspace that maximizes the preserved sample variance. Then in 1 dimensional PCA, we find a line to maximize the variance of the projection of the 2 dimensional data onto that line. This line is not unique when the 2D data has rotational symmetry, so there are more than one lines that give the same maximal variance in the projection. Presumably this does not happen very often in real data, but it's a good way to step back and think about what PCA really does.
+
+An example is when the 8 points are evenly distributed on a circle. Now `gganimate`, a package for animation working seamlessly with `ggplot2`, is on CRAN. In this blog post, I use `gganimate` to demonstrate how we can rotate the principal component without changing variance explained. I also heavily facilitate the Tidyverse framework to make this animation.
+
+```{r, message=FALSE}
+library(tidyverse)
+library(gganimate)
+theme_set(theme_bw())
+```
+
+Here I generate 8 points distributed evenly on the unit circle.
+```{r}
+circle <- tibble(theta = pi * seq(0, 7/4, length.out = 8),
+                 x = cos(theta),
+                 y = sin(theta))
+ggplot(circle, aes(x, y)) +
+  geom_point() +
+  coord_equal()
+```
+
+We see that any line passing through the origin and one of the 8 points can be the space spanned by the principal component. To verify:
+```{r}
+prcomp(circle[, c("x", "y")])
+```
+
+The two principal components span the x axis and the y axis respectively, with the same variance explained. Due to symmetry, $y = x$ should also have the same variance explained, so is $y = -x$.
+
+Then I want to project these points on different lines passing through the origin, so I write a function the generate the projections in $\mathbb R^2$. 
+```{r}
+# For projection matrix multiplication
+circle_mat <- as.matrix(circle[, c("x", "y")])
+```
+
+```{r}
+# x, y: x and y coordinates of unit vector on which points are to be projected
+# m: matrix with columns x and y, coordinates of points to be projected
+# Output: Tibble with colums x_proj and y_proj, the x and y coordinates of projected points
+project_pts <- function(x, y, m) {
+  # Projection matrix
+  new_basis <- c(x, y)
+  P <- new_basis %*% t(new_basis)
+  # Projection
+  proj <- m %*% t(P)
+  colnames(proj) <- c("x_proj", "y_proj")
+  return(as_tibble(proj))
+}
+```
+
+Now I project each of the 8 points to each version of the principal component, each spans a line passing through the origin and one of the 8 points on the circle.
+```{r}
+# Do the projection
+projections <- circle %>% 
+  mutate(group = seq_along(theta),
+         projs = map2(x, y, project_pts, m = circle_mat),
+         # Original point corresponding to projected coordinates
+         origs = map(theta, ~ setNames(circle[, c("x", "y")], c("x_orig", "y_orig")))) %>% 
+  rename(theta_proj = theta) %>% 
+  select(-x, -y) %>% 
+  unnest(projs, origs)
+```
+
+Time to animate! The `group` aesthetics here is to prevent interpolation between states, which obscures the fact that the projections are the same thing rotated.
+```{r}
+ggplot(projections, aes(x_proj, y_proj)) +
+  geom_line(aes(group = group), size = 0.3) +
+  geom_segment(aes(xend = x_orig, yend = y_orig, group = group), 
+               linetype = 2, color = "gray") +
+  geom_point(aes(group = group), shape = 8, color = "cornflowerblue") +
+  transition_states(theta_proj) +
+  geom_point(data = circle, aes(x, y)) +
+  coord_equal()
+```
+
+Indeed, it looks like the whole thing is a rotating rigid body.
