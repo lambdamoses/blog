@@ -47,7 +47,7 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 [Big Questions Online](https://www.bigquestionsonline.com) This is the sister site of The New Atlantis. On this site are articles on big questions, such as religious freedom, free will, problem of evil, and philosophy of science, as well as a summary of the discussion in response to those articles. This site also shares relevant posts from other sites.
 
 #### Christianity
-[BioLogos](https://biologos.org) Website of organization founded by [Francis Collins](https://www.nih.gov/about-nih/who-we-are/nih-director) to answer questions on Christianity and the theory of evolution. Now it also has blog posts on this topic and its own conference.
+[BioLogos](https://biologos.org) Website of organization founded by [Francis Collins](https://www.nih.gov/about-nih/who-we-are/nih-director) to answer questions on Christianity and the theory of evolution. Now it also has blog posts on this topic, its own conference, and a [podcast](https://biologos.org/language-of-god-podcast).
 
 [Center for Theology and the Natural Sciences](http://www.ctns.org/index.html) Part of the Graduate Theological Union in San Francisco and Berkeley. This institute focuses on Christian theology, and has an academic journal [Theology and Science](https://www.tandfonline.com/toc/rtas20/current). 
 
@@ -95,7 +95,7 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 #### Interfaith
 [The Big Questions in Science and Religion](https://www.goodreads.com/book/show/3359136-the-big-questions-in-science-and-religion) by Keith Ward (Oxford philosopher). This is a thought provoking survey of philosophical perspectives on hot button issues in science and religion.
 
-[Galileo Goes to Jail: And Other Myths about Science and Religion](https://www.goodreads.com/book/show/5543495-galileo-goes-to-jail) edited by Ronald Numbers. This book debunks common myths about science and religion, including, as the title suggests, that Galileo went to jail, by historical evidence. The myths debunks here include both those used to promote atheism and those used to promote Christianity.
+[Galileo Goes to Jail: And Other Myths about Science and Religion](https://www.goodreads.com/book/show/5543495-galileo-goes-to-jail) edited by Ronald Numbers. This book debunks common myths about science and religion, including, as the title suggests, that Galileo went to jail, by historical evidence. The myths debunked here include both those used to promote atheism and those used to promote Christianity.
 
 [Science vs. Religion: What Scientists Really Think](https://www.goodreads.com/book/show/8044086-science-vs-religion) by Elaine Howard Ecklund (Rice sociologist). This book presents results of sociological research on religious beliefs of scientists in elite universities. It debunks some myths and stereotypes about scientists, such as that all scientists are atheists, and provides some suggestions on dialogue to foster understanding.
 
@@ -103,19 +103,23 @@ Scholars in science and religion do acknowledge this bias[^2], and would like to
 
 [The Experience of God: Being, Consciousness, Bliss](https://www.goodreads.com/book/show/21874723-the-experience-of-god) by David Bentley Hart (Eastern Orthodox theologian, University of Notre Dame fellow). There's a wide variety of views on science and religion even within Christianity; I just listed resources on process theology and panentheism, and this one is on classical theism. This book aims to define the word "God" from the perspective of classical theism, and draws from mystical traditions from major religions around the world. It's not intended to be about science and religion, but it does discuss many issues in science and religion, such as naturalism, how God relates to the world, consciousness, and relations between evolution and morality and aesthetics. God is so much beyond our feeble human minds that we can never give a comprehensive definition of God, but at least believers should have a better sense of what they believe in, and non-believers should have a better sense of what they don't believe in; most theists don't believe in the kind of god that Richard Dawkins doesn't believe in anyway.
 
+[The Mind of God: The Scientific Basis for a Rational World](https://www.goodreads.com/book/show/137797.The_Mind_of_God) by Paul Davis. While to be honest, I do not find the arguments in this book convincing, this book touches upon central issues in science and religion, such as natural law, multiverse, and how God relates to time. Thus I recommend this book as an introduction to science and religion.
+
+[Evolution, Games, and God: The Principle of Cooperation](https://www.goodreads.com/book/show/16241461-evolution-games-and-god) edited by Martin A. Nowak (Harvard biologist) and Sarah Coakley (Cambridge theologian). One of the burning questions in science and religion is whether the attempt to explain morality from evolution encroaches the traditional territory of religion. This book contains short introductory papers on the historical background of evolution and morality, math of game theory, 21st century work on evolutionary morality, and philosophy and theological views on this issue. Some of the papers discuss how what's normative in ethics relates to evolution, and there is an account of the problem of natural evil (namely how can a good God create so much animal suffering in evolution?). The papers here are generally shorter than more in depth journal papers in science and religion, but I recommend this book as good starting points for book club discussions.
+
 #### Christianity
 [The Language of God](https://www.goodreads.com/book/show/35506.The_Language_of_God) by Francis Collins. This book is not very in depth or philosophical, but is a good and common place to get started. It describes Francis Collins' journey from atheism to Christianity, and it easy to read.
 
-[Monopolizing Knowledge: A Scientist Refutes Religion-Denying, Reason-Destroying Scientists](https://www.goodreads.com/book/show/13171530-monopolizing-knowledge) by Ian Hutchinson (MIT physicist). This book present reasons against scientism, a belief that science is the only valid path to knowledge.
+[Monopolizing Knowledge: A Scientist Refutes Religion-Denying, Reason-Destroying Scientism](https://www.goodreads.com/book/show/13171530-monopolizing-knowledge) by Ian Hutchinson (MIT physicist). This book present reasons against scientism, a belief that science is the only valid path to knowledge.
 
-[Can a Scientist Believe in Mirables?](https://www.goodreads.com/book/show/40164801-can-a-scientist-believe-in-miracles) by Ian Hutchinson. This book answers FAQs about science and Christianity, debunking the popular perception that faith can only be intellectually dishonest.
+[Can a Scientist Believe in Miracles?](https://www.goodreads.com/book/show/40164801-can-a-scientist-believe-in-miracles) by Ian Hutchinson. This book answers FAQs about science and Christianity, debunking the popular perception that faith can only be intellectually dishonest.
 
 #### Islam
 [Islam's Quantum Question: Reconciling Muslim Tradition and Modern Science](https://www.goodreads.com/book/show/8614056-islam-s-quantum-question) by Nidhal Guessoum (American University of Sharjah astrophysicist). This book summarizes issues unique to relationships between Islam and science, such as Creationism in the Islamic world and development of various strands of "Islamic science" and why they are problematic. 
 
 [Philosophy in the Islamic World](https://www.goodreads.com/book/show/29940298-philosophy-in-the-islamic-world) by Peter Adamson. This is not about science and religion per se, but central issues in science and religion have already been discussed by philosophers before the advent of modern science. Issues discussed in this book are relationships between religion and reason (in both Islam and Judaism), natural theology, and some history of science, with precursors to ideas in the scientific revolution.
 
-_About the cover photo: Psalm 111:2 at the main entrance to the new location of the Cavendish Laboratory built in the 1970s. The original Cavendish Laboratory (from the 19th centurry) has the Latin version at the entrance, carved at the instigation of James Clark Maxwell._
+_About the cover photo: Psalm 111:2 at the main entrance to the new location of the Cavendish Laboratory built in the 1970s. The original Cavendish Laboratory (from the 19th century) has the Latin version at the entrance, carved at the instigation of James Clark Maxwell._
 
 [^1]: See a paper on how American Muslims and Jews view science and religion: http://journals.sagepub.com/doi/abs/10.1177/0037768616664473
 [^2]: https://onlinelibrary.wiley.com/doi/abs/10.1111/zygo.12352
