@@ -46,6 +46,7 @@ library(GenomeInfoDb)
 library(GenomicFeatures)
 library(BUSpaRse)
 library(here)
+library(scales)
 source(here("code", "plotting.R")) # See GitHub repo of this blog
 ```
 
@@ -156,7 +157,8 @@ The one I used is `Homo_sapiens.GRCh38.cdna.all.fa.gz`, not the `abinitio` one. 
 ```{r}
 gtf_meta <- as.data.frame(gtf[gtf$type == "transcript"])
 gtf_meta <- gtf_meta %>% 
-  mutate(gtf_only = !transcript_id %in% cdna_tx)
+  mutate(gtf_only = !transcript_id %in% cdna_tx,
+         gene_biotype = str_replace_all(gene_biotype, "_", " "))
 ```
 
 ```{r}
@@ -178,11 +180,9 @@ p <- ggplot(gtf_meta, aes(fct_reorder(gene_biotype, gtf_only, .fun = mean), fill
   geom_bar(position = "fill", alpha = 0.5) +
   scale_y_continuous(expand = expand_scale(mult = c(0, 0))) +
   scale_fill_discrete(name = "GTF only") +
-  labs(x = "gene biotype", y = "proportion") +
   coord_flip() + theme_bw() +
-  labs(x = "") +
   theme(legend.position = "top", legend.justification = c(0,0.5),
-        legend.margin = margin(t = 14))
+        legend.margin = margin(t = 14), axis.title = element_blank())
 # To place title further to the left; will be fixed in ggplot2 devel
 annotate_figure(p, fig.lab = "Proportion of GTF only transcripts in each gene biotype in GTF",
                 fig.lab.pos = "top.left", fig.lab.size = 14)
@@ -210,7 +210,8 @@ cdna_meta <- tibble(transcript_id = cdna_tx,
            strand == "1" ~ "+",
            strand == "-1" ~ "-",
            TRUE ~ "*"
-         ))
+         ),
+         gene_biotype = str_replace_all(gene_biotype, "_", " "))
 ```
 
 ```{r}
@@ -234,11 +235,9 @@ p <- ggplot(cdna_meta, aes(fct_reorder(gene_biotype, cdna_only, .fun = mean), fi
   geom_bar(position = "fill", alpha = 0.5) +
   scale_y_continuous(expand = expand_scale(mult = c(0, 0))) +
   scale_fill_discrete(name = "cDNA only") +
-  labs(x = "gene biotype", y = "proportion") +
   coord_flip() + theme_bw() +
-  labs(x = "") +
   theme(legend.position = "top", legend.justification = c(0,0.5),
-        legend.margin = margin(t = 14))
+        legend.margin = margin(t = 14), axis.title = element_blank())
 annotate_figure(p, 
                 fig.lab = "Proportion of cDNA only transcripts in each gene biotype in cDNA fasta",
                 fig.lab.pos = "top.left", fig.lab.size = 14)
@@ -272,9 +271,10 @@ gtf_meta %>%
   coord_flip() +
   facet_wrap(~ seqname_type, scales = "free", ncol = 1, strip.position = "right") +
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)),
-                     breaks = scales::pretty_breaks(n = 7)) +
-  labs(x = "", title = "Number of transcripts for each seqname for GTF") +
-  theme(legend.position = "top", legend.justification = c(0,0.5))
+                     breaks = pretty_breaks(n = 7)) +
+  labs(title = "Number of transcripts for each seqname for GTF") +
+  theme(legend.position = "top", legend.justification = c(0,0.5),
+        axis.title = element_blank())
 ```
 
 Apparently GTF only transcripts are not specific to scaffolds or chromosomes, though some scaffolds have a small number of genes, all of which are GTF only. What about in the cDNA file?
@@ -298,10 +298,9 @@ p <- ggplot(cdna_meta, aes(fct_rev(seqnames), fill = cdna_only)) +
   scale_fill_discrete(name = "cDNA only") +
   facet_wrap(~ seqname_type, scales = "free", ncol = 1, strip.position = "right") +
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)), 
-                     breaks = scales::pretty_breaks(n = 7)) +
-  labs(x = "") +
+                     breaks = pretty_breaks(n = 7)) +
   theme(legend.position = "top", legend.justification = c(0,0.5), 
-        legend.margin = margin(t = 14))
+        legend.margin = margin(t = 14), axis.title = element_blank())
 annotate_figure(p, fig.lab = "Number of transcripts for each seqname for cDNA fasta", 
                 fig.lab.pos = "top.left", fig.lab.size = 14)
 ```

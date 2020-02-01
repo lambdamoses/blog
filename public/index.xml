@@ -6,17 +6,17 @@
     <description>Recent content on From System to System</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Comparing Ensembl GTF and cDNA</title>
-      <link>/2020/01/31/comparing-ensembl-gtf-and-cdna/</link>
-      <pubDate>Fri, 31 Jan 2020 00:00:00 +0000</pubDate>
+      <link>/2020/02/01/comparing-ensembl-gtf-and-cdna/</link>
+      <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/2020/01/31/comparing-ensembl-gtf-and-cdna/</guid>
+      <guid>/2020/02/01/comparing-ensembl-gtf-and-cdna/</guid>
       <description>It seems that most people think Ensembl’s GTF file and cDNA fasta file mean the same transcripts:
 Watch out! @ensembl&amp;#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
 &amp;mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads.</description>
