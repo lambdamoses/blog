@@ -26,6 +26,7 @@ One of my favorite aspects of R is the vibrant R community. A way to learn from 
 * [Dave Tang's blog](https://davetang.org/muse/): Bioinformatics blog with emphasis on R.
 * [Data Science Plus](https://datascienceplus.com): Has tutorials on both R and Python.
 * [Fronkonstin](https://fronkonstin.com): Using R to create mathematical aRt.
+* [Data Imaginist](https://www.data-imaginist.com/): Blog of Thomas Lin Pedersen.
 
 While my research made me a full time R user, actually I have never taken a class about R. Instead, I learnt R entirely on my own, thanks to the great resources from the R community available for free. These are some R books I find helpful freely available online:
 

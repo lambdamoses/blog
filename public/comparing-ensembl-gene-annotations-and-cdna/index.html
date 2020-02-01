@@ -1,0 +1,1011 @@
+
+
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.59.1 with theme Tranquilpeak 0.4.3-BETA">
+    <title>Comparing Ensembl gene annotations and cDNA</title>
+    <meta name="author" content="Lambda Moses">
+    <meta name="keywords" content="tech">
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+    <meta name="description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file match:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads.">
+    <meta property="og:description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file match:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Comparing Ensembl gene annotations and cDNA">
+    <meta property="og:url" content="/comparing-ensembl-gene-annotations-and-cdna/">
+    <meta property="og:site_name" content="From System to System">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="From System to System">
+    <meta name="twitter:description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file match:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads.">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-124557538-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">From System to System</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+<link rel="stylesheet" href="/css/atom-one-light.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Lambda Moses</h4>
+        
+          <h5 class="sidebar-profile-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lambdamoses">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/8916916/lambda-moses">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/2019/03/02/r-blogs-i-follow">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">R Blogroll</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/2018/07/28/resources">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-heart"></i>
+      
+      <span class="sidebar-button-desc">Religion and Science</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Comparing Ensembl gene annotations and cDNA
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-01-24T00:00:00Z">
+        
+  January 24, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/bioinformatics">bioinformatics</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+
+<p>It seems that most people think Ensembl’s GTF file and cDNA fasta file match:</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Watch out! <a href="https://twitter.com/ensembl?ref_src=twsrc%5Etfw">@ensembl</a>&#39;s Fasta and GTF annotation files available via <a href="https://t.co/2AhCSnL7py">https://t.co/2AhCSnL7py</a> do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?</p>&mdash; K. Vitting-Seerup (@KVittingSeerup) <a href="https://twitter.com/KVittingSeerup/status/1029018660374044672?ref_src=twsrc%5Etfw">August 13, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads. But how exactly does the GTF annotation differ from cDNA? This isn’t very clear on the Ensembl website. In this blog post, I’ll answer the following questions:</p>
+<ul>
+<li>What kind of genes do those non-overlapping transcripts belong to?</li>
+<li>For the transcripts present in both, do the GTF annotation and the cDNA fasta file mean the same sequences?</li>
+</ul>
+<p>For now, I will analyze Ensembl’s human genome annotations; I suspect that the same rule applies to other species as well, especially vertebrates.</p>
+<pre class="r"><code>library(tidyverse)
+library(VennDiagram)
+library(biomartr)
+library(ggpubr)
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(Biostrings)
+library(plyranges)
+library(GenomeInfoDb)
+library(GenomicFeatures)
+library(BUSpaRse)
+library(here)
+source(here(&quot;code&quot;, &quot;plotting.R&quot;)) # See GitHub repo of this blog</code></pre>
+<div id="download-files" class="section level1">
+<h1>Download files</h1>
+<pre class="r"><code># Download cDNA fasta file
+if (!file.exists(here(&quot;reference&quot;, &quot;hs_cdna99.fa.gz&quot;))) {
+  download.file(&quot;ftp://ftp.ensembl.org/pub/release-99/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz&quot;,
+                destfile = here(&quot;reference&quot;, &quot;hs_cdna99.fa.gz&quot;))
+}</code></pre>
+<pre class="r"><code># Download GTF file
+gtf_fn &lt;- getGTF(db = &quot;ensembl&quot;, organism = &quot;Homo sapiens&quot;, path = here(&quot;reference&quot;))</code></pre>
+<pre><code>## Starting gtf retrieval of &#39;Homo sapiens&#39; from ensembl ...</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## File /Users/lambda/Documents/fs2s/reference/Homo_sapiens.GRCh38.99_ensembl.gtf.gz exists already. Thus, download has been skipped.</code></pre>
+<pre><code>## The *.gtf annotation file of &#39;Homo sapiens&#39; has been downloaded to &#39;/Users/lambda/Documents/fs2s/reference/Homo_sapiens.GRCh38.99_ensembl.gtf.gz&#39; and has been named &#39;Homo_sapiens.GRCh38.99_ensembl.gtf.gz&#39;.</code></pre>
+<pre class="r"><code>cdna &lt;- readDNAStringSet(here(&quot;reference&quot;, &quot;hs_cdna99.fa.gz&quot;))
+gtf &lt;- read_gff(gtf_fn)</code></pre>
+<p>The sequence names in the Ensembl GTF file contains genome annotation information, which I’ll compare to the corresponding GTF annotation.</p>
+<pre class="r"><code>head(names(cdna))</code></pre>
+<pre><code>## [1] &quot;ENST00000434970.2 cdna chromosome:GRCh38:14:22439007:22439015:1 gene:ENSG00000237235.2 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRDD2 description:T cell receptor delta diversity 2 [Source:HGNC Symbol;Acc:HGNC:12255]&quot;                
+## [2] &quot;ENST00000415118.1 cdna chromosome:GRCh38:14:22438547:22438554:1 gene:ENSG00000223997.1 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRDD1 description:T cell receptor delta diversity 1 [Source:HGNC Symbol;Acc:HGNC:12254]&quot;                
+## [3] &quot;ENST00000448914.1 cdna chromosome:GRCh38:14:22449113:22449125:1 gene:ENSG00000228985.1 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRDD3 description:T cell receptor delta diversity 3 [Source:HGNC Symbol;Acc:HGNC:12256]&quot;                
+## [4] &quot;ENST00000631435.1 cdna chromosome:GRCh38:CHR_HSCHR7_2_CTG6:142847306:142847317:1 gene:ENSG00000282253.1 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRBD1 description:T cell receptor beta diversity 1 [Source:HGNC Symbol;Acc:HGNC:12158]&quot;
+## [5] &quot;ENST00000632684.1 cdna chromosome:GRCh38:7:142786213:142786224:1 gene:ENSG00000282431.1 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRBD1 description:T cell receptor beta diversity 1 [Source:HGNC Symbol;Acc:HGNC:12158]&quot;                
+## [6] &quot;ENST00000390583.1 cdna chromosome:GRCh38:14:105904497:105904527:-1 gene:ENSG00000211923.1 gene_biotype:IG_D_gene transcript_biotype:IG_D_gene gene_symbol:IGHD3-10 description:immunoglobulin heavy diversity 3-10 [Source:HGNC Symbol;Acc:HGNC:5495]&quot;</code></pre>
+<pre class="r"><code>head(gtf)</code></pre>
+<pre><code>## GRanges object with 6 ranges and 22 metadata columns:
+##       seqnames      ranges strand |   source       type     score     phase
+##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;   &lt;factor&gt; &lt;numeric&gt; &lt;integer&gt;
+##   [1]        1 11869-14409      + |   havana       gene      &lt;NA&gt;      &lt;NA&gt;
+##   [2]        1 11869-14409      + |   havana transcript      &lt;NA&gt;      &lt;NA&gt;
+##   [3]        1 11869-12227      + |   havana       exon      &lt;NA&gt;      &lt;NA&gt;
+##   [4]        1 12613-12721      + |   havana       exon      &lt;NA&gt;      &lt;NA&gt;
+##   [5]        1 13221-14409      + |   havana       exon      &lt;NA&gt;      &lt;NA&gt;
+##   [6]        1 12010-13670      + |   havana transcript      &lt;NA&gt;      &lt;NA&gt;
+##               gene_id gene_version   gene_name gene_source
+##           &lt;character&gt;  &lt;character&gt; &lt;character&gt; &lt;character&gt;
+##   [1] ENSG00000223972            5     DDX11L1      havana
+##   [2] ENSG00000223972            5     DDX11L1      havana
+##   [3] ENSG00000223972            5     DDX11L1      havana
+##   [4] ENSG00000223972            5     DDX11L1      havana
+##   [5] ENSG00000223972            5     DDX11L1      havana
+##   [6] ENSG00000223972            5     DDX11L1      havana
+##                             gene_biotype   transcript_id transcript_version
+##                              &lt;character&gt;     &lt;character&gt;        &lt;character&gt;
+##   [1] transcribed_unprocessed_pseudogene            &lt;NA&gt;               &lt;NA&gt;
+##   [2] transcribed_unprocessed_pseudogene ENST00000456328                  2
+##   [3] transcribed_unprocessed_pseudogene ENST00000456328                  2
+##   [4] transcribed_unprocessed_pseudogene ENST00000456328                  2
+##   [5] transcribed_unprocessed_pseudogene ENST00000456328                  2
+##   [6] transcribed_unprocessed_pseudogene ENST00000450305                  2
+##       transcript_name transcript_source                 transcript_biotype
+##           &lt;character&gt;       &lt;character&gt;                        &lt;character&gt;
+##   [1]            &lt;NA&gt;              &lt;NA&gt;                               &lt;NA&gt;
+##   [2]     DDX11L1-202            havana               processed_transcript
+##   [3]     DDX11L1-202            havana               processed_transcript
+##   [4]     DDX11L1-202            havana               processed_transcript
+##   [5]     DDX11L1-202            havana               processed_transcript
+##   [6]     DDX11L1-201            havana transcribed_unprocessed_pseudogene
+##               tag transcript_support_level exon_number         exon_id
+##       &lt;character&gt;              &lt;character&gt; &lt;character&gt;     &lt;character&gt;
+##   [1]        &lt;NA&gt;                     &lt;NA&gt;        &lt;NA&gt;            &lt;NA&gt;
+##   [2]       basic                        1        &lt;NA&gt;            &lt;NA&gt;
+##   [3]       basic                        1           1 ENSE00002234944
+##   [4]       basic                        1           2 ENSE00003582793
+##   [5]       basic                        1           3 ENSE00002312635
+##   [6]       basic                       NA        &lt;NA&gt;            &lt;NA&gt;
+##       exon_version  protein_id protein_version     ccds_id
+##        &lt;character&gt; &lt;character&gt;     &lt;character&gt; &lt;character&gt;
+##   [1]         &lt;NA&gt;        &lt;NA&gt;            &lt;NA&gt;        &lt;NA&gt;
+##   [2]         &lt;NA&gt;        &lt;NA&gt;            &lt;NA&gt;        &lt;NA&gt;
+##   [3]            1        &lt;NA&gt;            &lt;NA&gt;        &lt;NA&gt;
+##   [4]            1        &lt;NA&gt;            &lt;NA&gt;        &lt;NA&gt;
+##   [5]            1        &lt;NA&gt;            &lt;NA&gt;        &lt;NA&gt;
+##   [6]         &lt;NA&gt;        &lt;NA&gt;            &lt;NA&gt;        &lt;NA&gt;
+##   -------
+##   seqinfo: 47 sequences from an unspecified genome; no seqlengths</code></pre>
+</div>
+<div id="overlaps" class="section level1">
+<h1>Overlaps</h1>
+<pre class="r"><code># Extract transcript ID from fasta sequence name
+cdna_tx &lt;- str_extract(names(cdna), &quot;^ENST\\d+&quot;)
+# Transcript IDs from GTF
+gtf_tx &lt;- unique(gtf$transcript_id)
+gtf_tx &lt;- gtf_tx[!is.na(gtf_tx)]
+length(cdna_tx)</code></pre>
+<pre><code>## [1] 190432</code></pre>
+<pre class="r"><code>length(gtf_tx)</code></pre>
+<pre><code>## [1] 227818</code></pre>
+<p>In total, there are 190432 transcripts in the fasta file, and 227818 in the GTF file.</p>
+<pre class="r"><code>v &lt;- draw.pairwise.venn(length(gtf_tx), length(cdna_tx),
+                        length(intersect(cdna_tx, gtf_tx)),
+                        category = c(&quot;GTF&quot;, &quot;cDNA&quot;),
+                        fill = c(&quot;purple&quot;, &quot;blue&quot;),
+                        alpha = c(0.5, 0.5))
+grid.draw(v)</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-9-1.png" width="288" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>grid.newpage()</code></pre>
+<p>While most transcripts overlap, a sizable minority don’t.</p>
+</div>
+<div id="what-kind-of-genes" class="section level1">
+<h1>What kind of genes?</h1>
+<p>It would not be so terrible if the transcripts that don’t overlap between the GTF file and cDNA fasta file are all from genes most people don’t care about, such as pseudogenes. Or would those genes be haplotype variants? Is this the case? Here I’ll use Ensembl version 99, which is the most recent as of writing.</p>
+<p>The Ensembl’s FTP site has README files for each directory. For GTF files, the README file says</p>
+<blockquote>
+<p>GTF provides access to all annotated transcripts which make
+up an Ensembl gene set. Annotation is based on alignments of
+biological evidence (eg. proteins, cDNAs, RNA-seq) to a genome assembly.
+The annotation dumped here is transcribed and translated from the
+genome assembly and is not the original input sequence data that
+we used for alignment. Therefore, the sequences provided by Ensembl
+may differ from the original input sequence data where the genome
+assembly is different to the aligned sequence.</p>
+</blockquote>
+<p>For cDNA files, the README says:</p>
+<blockquote>
+<p>These files hold the cDNA sequences corresponding to Ensembl gene
+predictions. cDNA consists of transcript sequences for actual and possible
+genes, including pseudogenes, NMD and the like. See the file names
+explanation below for different subsets of both known and predicted
+transcripts.</p>
+</blockquote>
+<blockquote>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">FILE NAMES</td>
+</tr>
+</tbody>
+</table>
+<p>The files are consistently named following this pattern:
+<species>.<assembly>.<sequence type>.<status>.fa.gz</p>
+</blockquote>
+<blockquote>
+<p><species>: The systematic name of the species.
+<assembly>: The assembly build name.
+<sequence type>: cdna for cDNA sequences
+<status>
+* ‘cdna.all’ - the super-set of all transcripts resulting from
+Ensembl gene predictions (see more below).
+* ‘cdna.abinitio’ - transcripts resulting from ‘ab initio’ gene prediction
+algorithms such as SNAP and GENSCAN. In general all ‘ab initio’
+predictions are solely based on the genomic sequence and do not
+use other experimental evidence. Therefore, not all GENSCAN or SNAP
+cDNA predictions represent biologically real cDNAs.
+Consequently, these predictions should be used with care.</p>
+</blockquote>
+<p>The one I used is <code>Homo_sapiens.GRCh38.cdna.all.fa.gz</code>, not the <code>abinitio</code> one. However, the README doesn’t seem to be clear about how the GTF annotation differs from that in the cDNA fasta file. Here I’ll find out about such differences.</p>
+<div id="gtf-only" class="section level2">
+<h2>GTF only</h2>
+<pre class="r"><code>gtf_meta &lt;- as.data.frame(gtf[gtf$type == &quot;transcript&quot;])
+gtf_meta &lt;- gtf_meta %&gt;% 
+  mutate(gtf_only = !transcript_id %in% cdna_tx)</code></pre>
+<pre class="r"><code>n_txs &lt;- gtf_meta %&gt;% 
+  count(gtf_only, gene_biotype)</code></pre>
+<p>How many transcripts are there in each gene biotype, and how many transcripts in each biotype are only in the GTF file? For a description of Ensembl gene biotypes, see <a href="http://www.ensembl.org/info/genome/genebuild/biotypes.html">this page</a>.</p>
+<pre class="r"><code>plot_bar_patch(n_txs, 3, &quot;gtf_only&quot;, &quot;GTF only&quot;, 
+               &quot;Number of transcripts in each gene biotype in GTF file&quot;)</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-12-1.png" width="384" /></p>
+<p>Proportion of GTF only transcripts in each biotype</p>
+<pre class="r"><code>ggplot(gtf_meta, aes(fct_reorder(gene_biotype, gtf_only, .fun = mean), fill = gtf_only)) +
+  geom_bar(position = &quot;fill&quot;, alpha = 0.5) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0))) +
+  scale_fill_discrete(name = &quot;GTF only&quot;) +
+  labs(x = &quot;gene biotype&quot;, y = &quot;proportion&quot;) +
+  coord_flip() + theme_bw() +
+  labs(x = &quot;&quot;, title = &quot;Proportion of GTF only transcripts in each gene biotype&quot;) +
+  theme(legend.position = &quot;top&quot;, legend.justification = c(0,0.5))</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-13-1.png" width="384" /></p>
+<p>It’s now apparent that some transcripts are only present in the GTF file because their biotypes are excluded from the cDNA file. These GTF only biotypes are non-coding RNAs, except TEC, which stands for <em>To be Experimentally Confirmed</em>. However, Ensembl has a separately fasta file for lncRNA. Some non-coding RNAs are not polyadenylated (e.g. mature miRNAs), which means they are omitted by polyA selection prior to RNA-seq. However, some lncRNAs are polyadenylated, and <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/advanced/references">Cell Ranger’s reference</a> does include lincRNA (long intergenic non-coding RNA).</p>
+</div>
+<div id="cdna-fasta-only" class="section level2">
+<h2>cDNA fasta only</h2>
+<p>What about cDNA only transcripts? Are they also from specific gene biotypes?</p>
+<pre class="r"><code># Extract annotation from fasta sequence names
+cdna_meta &lt;- tibble(transcript_id = cdna_tx,
+                    cr = str_extract(names(cdna),
+                                     &quot;(?&lt;=((chromosome)|(scaffold)):GRCh38:).*?(?=\\s)&quot;),
+                    gene_biotype = str_extract(names(cdna), &quot;(?&lt;=gene_biotype:).*?(?=\\s)&quot;),
+                    gene_id = str_extract(names(cdna), &quot;(?&lt;=gene:).*?(?=\\.)&quot;),
+                    gene_symbol = str_extract(names(cdna), &quot;(?&lt;=gene_symbol:).*?(?=\\s)&quot;),
+                    cdna_only = !transcript_id %in% gtf_tx) %&gt;% 
+  separate(cr, into = c(&quot;seqnames&quot;, &quot;start&quot;, &quot;end&quot;, &quot;strand&quot;), sep = &quot;:&quot;) %&gt;% 
+  mutate(start = as.integer(start),
+         end = as.integer(end),
+         strand = case_when(
+           strand == &quot;1&quot; ~ &quot;+&quot;,
+           strand == &quot;-1&quot; ~ &quot;-&quot;,
+           TRUE ~ &quot;*&quot;
+         ))</code></pre>
+<pre class="r"><code>head(cdna_meta)</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   transcript_id seqnames  start    end strand gene_biotype gene_id gene_symbol
+##   &lt;chr&gt;         &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;      
+## 1 ENST00000434… 14       2.24e7 2.24e7 +      TR_D_gene    ENSG00… TRDD2      
+## 2 ENST00000415… 14       2.24e7 2.24e7 +      TR_D_gene    ENSG00… TRDD1      
+## 3 ENST00000448… 14       2.24e7 2.24e7 +      TR_D_gene    ENSG00… TRDD3      
+## 4 ENST00000631… CHR_HSC… 1.43e8 1.43e8 +      TR_D_gene    ENSG00… TRBD1      
+## 5 ENST00000632… 7        1.43e8 1.43e8 +      TR_D_gene    ENSG00… TRBD1      
+## 6 ENST00000390… 14       1.06e8 1.06e8 -      IG_D_gene    ENSG00… IGHD3-10   
+## # … with 1 more variable: cdna_only &lt;lgl&gt;</code></pre>
+<pre class="r"><code>n_txs_cdna &lt;- cdna_meta %&gt;% 
+  count(cdna_only, gene_biotype)</code></pre>
+<p>Number of transcripts in each biotype and number within each biotype that is only in the fasta file</p>
+<pre class="r"><code>plot_bar_patch(n_txs_cdna, 3, col_fill = &quot;cdna_only&quot;, name = &quot;cDNA only&quot;, 
+               title = &quot;Number of transcripts in each gene biotype in cDNA fasta&quot;)</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-17-1.png" width="384" /></p>
+<p>Proportion of transcripts that are only in the fasta file in each biotype</p>
+<pre class="r"><code>ggplot(cdna_meta, aes(fct_reorder(gene_biotype, cdna_only, .fun = mean), fill = cdna_only)) +
+  geom_bar(position = &quot;fill&quot;, alpha = 0.5) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0))) +
+  scale_fill_discrete(name = &quot;cDNA only&quot;) +
+  labs(x = &quot;gene biotype&quot;, y = &quot;proportion&quot;) +
+  coord_flip() + theme_bw() +
+  labs(x = &quot;&quot;, title = &quot;Proportion of cDNA only transcripts in each gene biotype&quot;) +
+  theme(legend.position = &quot;top&quot;, legend.justification = c(0,0.5))</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-18-1.png" width="384" /></p>
+<p>Apparently, cDNA fasta only transcripts are not specific to a particular biotype.</p>
+</div>
+<div id="chromosomes" class="section level2">
+<h2>Chromosomes</h2>
+<pre class="r"><code>chrs &lt;- c(as.character(1:22), &quot;X&quot;, &quot;Y&quot;, &quot;MT&quot;)</code></pre>
+<p>Gene annotations often contain information of not only the chromosomes, but also scaffolds.</p>
+<pre class="r"><code>seqlevels(gtf)</code></pre>
+<pre><code>##  [1] &quot;1&quot;          &quot;2&quot;          &quot;3&quot;          &quot;4&quot;          &quot;5&quot;         
+##  [6] &quot;6&quot;          &quot;7&quot;          &quot;8&quot;          &quot;9&quot;          &quot;10&quot;        
+## [11] &quot;11&quot;         &quot;12&quot;         &quot;13&quot;         &quot;14&quot;         &quot;15&quot;        
+## [16] &quot;16&quot;         &quot;17&quot;         &quot;18&quot;         &quot;19&quot;         &quot;20&quot;        
+## [21] &quot;21&quot;         &quot;22&quot;         &quot;X&quot;          &quot;Y&quot;          &quot;MT&quot;        
+## [26] &quot;GL000009.2&quot; &quot;GL000194.1&quot; &quot;GL000195.1&quot; &quot;GL000205.2&quot; &quot;GL000213.1&quot;
+## [31] &quot;GL000216.2&quot; &quot;GL000218.1&quot; &quot;GL000219.1&quot; &quot;GL000220.1&quot; &quot;GL000225.1&quot;
+## [36] &quot;KI270442.1&quot; &quot;KI270711.1&quot; &quot;KI270713.1&quot; &quot;KI270721.1&quot; &quot;KI270726.1&quot;
+## [41] &quot;KI270727.1&quot; &quot;KI270728.1&quot; &quot;KI270731.1&quot; &quot;KI270733.1&quot; &quot;KI270734.1&quot;
+## [46] &quot;KI270744.1&quot; &quot;KI270750.1&quot;</code></pre>
+<p>The GL* and KI* things are scaffolds, which are regions not assembled into chromosomes. Genomes, such as <code>BSgenome.Hsapiens.UCSC.hg38</code> and Ensembl’s top level genome (<code>Homo_sapiens.GRCh38.dna.toplevel.fa.gz</code>, downloaded by <code>biomartr::getGenome</code>), also contain haplotype information. Sometimes multiple Ensembl IDs correspond to the same gene symbol, as those Ensembl IDs correspond to different haplotypes. In contrast, <code>Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</code> does not have the scaffolds and haplotypes.</p>
+<p>Are the non-overlapping transcripts only on haplotypes or scaffolds?</p>
+<pre class="r"><code>gtf_meta %&gt;% 
+  mutate(seqname_type = case_when(
+    seqnames %in% chrs ~ &quot;chromosome&quot;,
+    str_detect(seqnames, &quot;^CHR_&quot;) ~ &quot;haplotype&quot;,
+    TRUE ~ &quot;scaffold&quot;
+  )) %&gt;% 
+  ggplot(aes(fct_rev(seqnames), fill = gtf_only)) +
+  geom_bar(position = position_dodge2(width = 0.9, preserve = &quot;single&quot;)) +
+  scale_fill_discrete(name = &quot;GTF only&quot;) +
+  coord_flip() +
+  facet_wrap(~ seqname_type, scales = &quot;free&quot;, ncol = 1, strip.position = &quot;right&quot;) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)),
+                     breaks = scales::pretty_breaks(n = 7)) +
+  labs(x = &quot;&quot;, title = &quot;Number of transcripts for each seqname for GTF&quot;) +
+  theme(legend.position = &quot;top&quot;, legend.justification = c(0,0.5))</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-21-1.png" width="384" /></p>
+<p>Apparently GTF only transcripts are not specific to scaffolds or chromosomes, though some scaffolds have a small number of genes, all of which are GTF only. What about in the cDNA file?</p>
+<pre class="r"><code>head(cdna_meta)</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   transcript_id seqnames  start    end strand gene_biotype gene_id gene_symbol
+##   &lt;chr&gt;         &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;      
+## 1 ENST00000434… 14       2.24e7 2.24e7 +      TR_D_gene    ENSG00… TRDD2      
+## 2 ENST00000415… 14       2.24e7 2.24e7 +      TR_D_gene    ENSG00… TRDD1      
+## 3 ENST00000448… 14       2.24e7 2.24e7 +      TR_D_gene    ENSG00… TRDD3      
+## 4 ENST00000631… CHR_HSC… 1.43e8 1.43e8 +      TR_D_gene    ENSG00… TRBD1      
+## 5 ENST00000632… 7        1.43e8 1.43e8 +      TR_D_gene    ENSG00… TRBD1      
+## 6 ENST00000390… 14       1.06e8 1.06e8 -      IG_D_gene    ENSG00… IGHD3-10   
+## # … with 1 more variable: cdna_only &lt;lgl&gt;</code></pre>
+<pre class="r"><code>cdna_meta &lt;- cdna_meta %&gt;% 
+  mutate(
+    seqname_type = case_when(
+      seqnames %in% chrs ~ &quot;chromosome&quot;,
+      str_detect(seqnames, &quot;^CHR&quot;) ~ &quot;haplotype&quot;,
+      TRUE ~ &quot;scaffold&quot;
+    ),
+    seqnames = fct_relevel(seqnames, c(chrs, setdiff(unique(seqnames), chrs) %&gt;% sort()))
+  )</code></pre>
+<pre class="r"><code>p &lt;- ggplot(cdna_meta, aes(fct_rev(seqnames), fill = cdna_only)) +
+  geom_bar(position = position_dodge2(width = 0.9, preserve = &quot;single&quot;)) +
+  coord_flip() +
+  scale_fill_discrete(name = &quot;cDNA only&quot;) +
+  facet_wrap(~ seqname_type, scales = &quot;free&quot;, ncol = 1, strip.position = &quot;right&quot;) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)), 
+                     breaks = scales::pretty_breaks(n = 7)) +
+  labs(x = &quot;&quot;) +
+  theme(legend.position = &quot;top&quot;, legend.justification = c(0,0.5), 
+        legend.margin = margin(t = 14))
+annotate_figure(p, fig.lab = &quot;Number of transcripts for each seqname for cDNA fasta&quot;, 
+                fig.lab.pos = &quot;top.left&quot;, fig.lab.size = 14)</code></pre>
+<p><img src="/post/2020-01-24-comparing-ensembl-gene-annotations-and-cdna_files/figure-html/unnamed-chunk-24-1.png" width="384" /></p>
+<pre class="r"><code>cdna_meta %&gt;% 
+  mutate(seqname_type = case_when(
+    seqnames %in% chrs ~ &quot;chromosome&quot;,
+    str_detect(seqnames, &quot;^CHR_&quot;) ~ &quot;haplotype&quot;,
+    TRUE ~ &quot;scaffold&quot;
+  )) %&gt;% 
+  filter(cdna_only) %&gt;% 
+  count(seqname_type) %&gt;% 
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   seqname_type     n
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 haplotype    18143</code></pre>
+<p>There’re hundreds of haplotypes here. All the cDNA only transcripts are on haplotypes. As haplotypes can confuse alignment, for the purpose of aligning RNA-seq reads to the genome, haplotypes should better be excluded.</p>
+</div>
+</div>
+<div id="same-sequences" class="section level1">
+<h1>Same sequences?</h1>
+<p>How about the transcripts shared between GTF and cDNA? Do those two sources mean the same sequence for the same transcript?</p>
+<pre class="r"><code>inter &lt;- gtf_meta %&gt;% 
+  inner_join(cdna_meta, by = c(&quot;gene_id&quot;, &quot;transcript_id&quot;, &quot;seqnames&quot;))</code></pre>
+<pre><code>## Warning: Column `seqnames` joining factors with different levels, coercing to
+## character vector</code></pre>
+<p>Do the GTF and cDNA files place the same transcripts at the same genomic ranges?</p>
+<pre class="r"><code>all.equal(inter$start.x, inter$start.y)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>all.equal(inter$end.x, inter$end.y)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>all.equal(as.character(inter$strand.x), as.character(inter$strand.y))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>all.equal(inter$gene_biotype.x, inter$gene_biotype.y)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>So the genomic ranges, strand, and gene biotypes do match. However, this is just for transcripts; exon annotations are absent from the sequence names of the cDNA fasta file. Are the exons also the same?</p>
+<pre class="r"><code>unique(inter$seqnames)</code></pre>
+<pre><code>##  [1] &quot;1&quot;          &quot;2&quot;          &quot;3&quot;          &quot;4&quot;          &quot;5&quot;         
+##  [6] &quot;6&quot;          &quot;7&quot;          &quot;X&quot;          &quot;8&quot;          &quot;9&quot;         
+## [11] &quot;11&quot;         &quot;10&quot;         &quot;12&quot;         &quot;13&quot;         &quot;14&quot;        
+## [16] &quot;15&quot;         &quot;16&quot;         &quot;17&quot;         &quot;18&quot;         &quot;20&quot;        
+## [21] &quot;19&quot;         &quot;Y&quot;          &quot;22&quot;         &quot;21&quot;         &quot;MT&quot;        
+## [26] &quot;KI270728.1&quot; &quot;KI270727.1&quot; &quot;GL000009.2&quot; &quot;GL000194.1&quot; &quot;GL000205.2&quot;
+## [31] &quot;GL000195.1&quot; &quot;GL000219.1&quot; &quot;KI270734.1&quot; &quot;GL000213.1&quot; &quot;GL000218.1&quot;
+## [36] &quot;KI270731.1&quot; &quot;KI270721.1&quot; &quot;KI270726.1&quot; &quot;KI270711.1&quot; &quot;KI270713.1&quot;</code></pre>
+<p>Say we don’t care about the scaffolds. I’ll extract the transcriptome (only for genes also present in the cDNA fasta file) using the GTF file <code>BSgenome.Hsapiens.UCSC.hg38</code> denotes chromosomes as something like <code>chr1</code>, while Ensembl just uses <code>1</code>, so I’ll convert <code>BSgenome.Hsapiens.UCSC.hg38</code> to Ensembl style.</p>
+<pre class="r"><code>gn &lt;- BSgenome.Hsapiens.UCSC.hg38
+seqlevelsStyle(gn) &lt;- &quot;Ensembl&quot;</code></pre>
+<pre class="r"><code># This will discard scaffolds
+gl &lt;- BUSpaRse:::subset_annot(gn, gtf)</code></pre>
+<pre><code>## 22 sequences in the annotation absent from the genome were dropped.</code></pre>
+<pre><code>## 430 sequences in the genome are absent from the annotation.</code></pre>
+<pre class="r"><code># Only keep overlapping transcripts
+gl &lt;- gl[gl$type == &quot;exon&quot; &amp; gl$transcript_id %in% inter$transcript_id]
+# Exons are already sorted in ascending order in the GTF file, even for minus strand genes
+# Need to sort if not already sorted
+gl &lt;- split(gl, gl$transcript_id)
+tx_gtf &lt;- extractTranscriptSeqs(gn, gl)</code></pre>
+<pre class="r"><code>cdna_compare &lt;- cdna
+names(cdna_compare) &lt;- cdna_meta$transcript_id
+# sort transcripts from the cDNA file, discard scaffolds
+cdna_compare &lt;- cdna_compare[names(tx_gtf)]</code></pre>
+<pre class="r"><code>cdna_compare</code></pre>
+<pre><code>##   A DNAStringSet instance of length 172246
+##           width seq                                         names               
+##      [1]   1032 CTGCTGCTGCTGCGCCCCAT...TAAATTTGCTGTGGTTTGTA ENST00000000233
+##      [2]   2450 AGAGTGGGGCACAGCGAGGC...TAAAAAACAAACAAAACATA ENST00000000412
+##      [3]   2274 GTCAGCTGGAGGAAGCGGAG...TATAATACCGAGCTCAAAAA ENST00000000442
+##      [4]   3715 CCTACCCCAGCTCTCGCGCC...GTGAGGATGTTTTGTTAAAA ENST00000001008
+##      [5]   4732 AGGCAATTTTTTTCCTCCCT...AATAAACCGTGGGGACCCGC ENST00000001146
+##      ...    ... ...
+## [172242]   4105 TAGATGTAACCCTGAGTGAA...AATCACAATTCTGCTAATGT ENST00000674151
+## [172243]   1374 AGGCTGATAAAATACCAGTA...TGAGCACGATGATGATGCAA ENST00000674152
+## [172244]   2789 CCTGCGCAGAGTCTGCGGAG...AAAATGAGCAAAAGTTGATC ENST00000674153
+## [172245]   8288 ATGGCCGAGAATGTGGTGGA...TAAACTGTGTGAGACAGACA ENST00000674155
+## [172246]    898 TCTCTGGATATGAGGCAGGA...ACTCAATTTGTTATTCAAAA ENST00000674156</code></pre>
+<pre class="r"><code>tx_gtf</code></pre>
+<pre><code>##   A DNAStringSet instance of length 172246
+##           width seq                                         names               
+##      [1]   1032 CTGCTGCTGCTGCGCCCCAT...TAAATTTGCTGTGGTTTGTA ENST00000000233
+##      [2]   2450 AGAGTGGGGCACAGCGAGGC...TAAAAAACAAACAAAACATA ENST00000000412
+##      [3]   2274 GTCAGCTGGAGGAAGCGGAG...TATAATACCGAGCTCAAAAA ENST00000000442
+##      [4]   3715 CCTACCCCAGCTCTCGCGCC...GTGAGGATGTTTTGTTAAAA ENST00000001008
+##      [5]   4732 AGGCAATTTTTTTCCTCCCT...AATAAACCGTGGGGACCCGC ENST00000001146
+##      ...    ... ...
+## [172242]   4105 TAGATGTAACCCTGAGTGAA...AATCACAATTCTGCTAATGT ENST00000674151
+## [172243]   1374 AGGCTGATAAAATACCAGTA...TGAGCACGATGATGATGCAA ENST00000674152
+## [172244]   2789 CCTGCGCAGAGTCTGCGGAG...AAAATGAGCAAAAGTTGATC ENST00000674153
+## [172245]   8288 ATGGCCGAGAATGTGGTGGA...TAAACTGTGTGAGACAGACA ENST00000674155
+## [172246]    898 TCTCTGGATATGAGGCAGGA...ACTCAATTTGTTATTCAAAA ENST00000674156</code></pre>
+<p>Do the transcript sequences at least have the same lengths?</p>
+<pre class="r"><code>all.equal(width(tx_gtf), width(cdna_compare))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Are the sequences the same? Since I don’t care how the sequences are different if they are different, no alignment is needed.</p>
+<pre class="r"><code>all(pcompare(tx_gtf, cdna_compare) == 0)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Yes, the sequences are the same.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file does not. The cDNA file contains haplotypes, while the GTF file does not. For alignment of RNA-seq reads from polyA selected techniques, non-coding RNAs in the GTF file probably aren’t so important, unless you do care about polyadenylated lncRNAs, so it’s fine to use the cDNA fasta file, but we should remove the haplotypes as they may cause confusion in alignment. However, if you are interested in non-coding RNAs, then download the ncRNA fasta file from Ensembl or extract the transcriptome with the GTF file. We’ve also got example R code here to filter by gene biotypes and to extract transcriptome from the genome with the GTF file.</p>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/ensembl/">ensembl</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/genome-annotation/">genome annotation</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/cdna/">cDNA</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/color-palettes-inspired-by-islamic-art/" data-tooltip="Color palettes inspired by Islamic art">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/comparing-ensembl-gene-annotations-and-cdna/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/comparing-ensembl-gene-annotations-and-cdna/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/comparing-ensembl-gene-annotations-and-cdna/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Lambda Moses. All Rights Reserved
+  </span>
+</footer>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="1">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/color-palettes-inspired-by-islamic-art/" data-tooltip="Color palettes inspired by Islamic art">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/comparing-ensembl-gene-annotations-and-cdna/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/comparing-ensembl-gene-annotations-and-cdna/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/comparing-ensembl-gene-annotations-and-cdna/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="1">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2Fcomparing-ensembl-gene-annotations-and-cdna%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2Fcomparing-ensembl-gene-annotations-and-cdna%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2Fcomparing-ensembl-gene-annotations-and-cdna%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Lambda Moses</h4>
+    
+      <div id="about-card-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        graduate student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Los Angeles
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         0 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://res.cloudinary.com/lambdamoses/image/upload/v1532889849/20171105_155503.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/comparing-ensembl-gene-annotations-and-cdna\/';
+          
+            this.page.identifier = '\/comparing-ensembl-gene-annotations-and-cdna\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'fromsystosys';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

@@ -1,63 +1,72 @@
-
-
-  
-    
-  
-
-
-  
-
-
-
-
-  
-
-
-  
-
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.53 with theme Tranquilpeak 0.4.3-BETA">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.63.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Lambda Moses">
+<meta name="keywords" content="">
+<meta name="description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
+
+
+<meta property="og:description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My Favorite and Least Favorite Aspects of R">
+<meta name="twitter:title" content="My Favorite and Least Favorite Aspects of R">
+<meta property="og:url" content="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/">
+<meta property="twitter:url" content="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/">
+<meta property="og:site_name" content="From System to System">
+<meta property="og:description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
+<meta name="twitter:description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-02-15T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-02-15T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/img/Rlogo.png">
+  <meta property="twitter:image" content="/img/Rlogo.png">
+
+
+  <meta property="og:image" content="https://res.cloudinary.com/lambdamoses/image/upload/v1534202996/Clifford2.png">
+  <meta property="twitter:image" content="https://res.cloudinary.com/lambdamoses/image/upload/v1534202996/Clifford2.png">
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
+
+
     <title>My Favorite and Least Favorite Aspects of R</title>
-    <meta name="author" content="Lambda Moses">
-    <meta name="keywords" content="">
 
     <link rel="icon" href="/favicon.png">
     
 
     
-    <meta name="description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
-    <meta property="og:description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="My Favorite and Least Favorite Aspects of R">
-    <meta property="og:url" content="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/">
-    <meta property="og:site_name" content="From System to System">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="From System to System">
-    <meta name="twitter:description" content="In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.">
-    
-    
 
-    
-    
-
-    
-      <meta property="og:image" content="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
-    
-
-    
-      <meta property="og:image" content="/img/Rlogo.png">
-    
-    
-      <meta property="og:image" content="https://res.cloudinary.com/lambdamoses/image/upload/v1534202996/Clifford2.png">
-    
-    
-
-    
+    <link rel="canonical" href="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -65,7 +74,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
     
     
 
@@ -88,6 +97,10 @@ if (!doNotTrack) {
     
   </head>
 
+<link rel="stylesheet" href="/css/atom-one-light.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
   <body>
     <div id="blog">
       <header id="header" data-behavior="4">
@@ -103,27 +116,23 @@ if (!doNotTrack) {
     
     
       
-        <img class="header-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=90" alt="Author&#39;s picture" />
+        <img class="header-picture" src="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=90" alt="Author&#39;s picture" />
       
     
     </a>
   
 </header>
 
-<link rel="stylesheet" href="/css/atom-one-light.css" rel="stylesheet" id="theme-stylesheet">
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
       <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
         <a href="/#about">
-          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">Lambda Moses</h4>
         
-          <h5 class="sidebar-profile-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech</h5>
+          <h5 class="sidebar-profile-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying computational biology at Caltech</h5>
         
       </div>
     
@@ -213,7 +222,17 @@ if (!doNotTrack) {
     
       <i class="sidebar-button-icon fa fa-lg fa-link"></i>
       
-      <span class="sidebar-button-desc">Blogroll</span>
+      <span class="sidebar-button-desc">R Blogroll</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/2018/07/28/resources">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-heart"></i>
+      
+      <span class="sidebar-button-desc">Religion and Science</span>
     </a>
   </li>
 
@@ -279,93 +298,49 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              
-
-<p>In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my <em>de facto</em> mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages. I still have a long way to go to improve my R skills and deepen my understanding of R, but I can&rsquo;t wait to reflect on my friendship with R so far.</p>
-
+              <p>In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my <em>de facto</em> mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages. I still have a long way to go to improve my R skills and deepen my understanding of R, but I can&rsquo;t wait to reflect on my friendship with R so far.</p>
 <h2 id="the-best-of-r">The Best of R</h2>
-
 <p>Here are my favorite aspects of R:</p>
-
 <p><strong>The Comprehensive R Archive Network (CRAN) and Bioconductor</strong> I can find an R package for pretty much everything I need in data analysis, and many of the cutting edge bioinformatics tools are written in R. <a href="https://cran.r-project.org/web/views/">CRAN task views</a> and <a href="https://bioconductor.org/packages/release/BiocViews.html">Bioconductor biocViews</a> are convenient ways to discover existing packages to solve particular kinds of problems. In addition, there&rsquo;re some great packages currently only on GitHub and not yet on CRAN or Bioconductor, such as <a href="https://github.com/YosefLab/VISION"><code>VISION</code></a> and <a href="https://github.com/dynverse/dynverse"><code>dynverse</code></a>. Recently, Johns Hopkins started a Bioconductor-inspired platform called <a href="https://neuroconductor.org">Neuroconductor</a> for R packages for medical image analysis.</p>
-
 <p><strong>The R community</strong> If there&rsquo;s something painful to use, then most likely someone somewhere will write a package to make that less painful. There&rsquo;re helpful people who answer our burning questions on Stack Overflow. Moreover, those cool packages are all contributed free of charge by the community, and in return, members of the community get to use lots of cool packages for free. There&rsquo;re also many great online books and tutorials that are free, such as Hadley Wickham&rsquo;s <a href="https://r4ds.had.co.nz">R for Data Science</a>. I like this kind of open and collaborative culture. Moreover, the R community is interdisciplinary, and consists of not only statisticians and data scientists, but also sociologists, geologists, psychologists, physicians, biologists, and so on who need to analyze data. Bioinformatics has absorbed a lot from other fields, from the good old principal component analysis (PCA) to how the famous <code>Seurat</code> package in single cell RNA-seq used a technique from time series to align multiple datasets.</p>
-
 <p><strong>The R community is not so hostile to women</strong> I know, CS majors are predominantly male, and it was said that for all its veneer of liberalism, Silicon Valley has a <a href="https://www.nytimes.com/2019/02/13/magazine/women-coding-computer-programming.html">problem with misogynist culture</a>. However, as a woman, I do not experience such misogyny in the R community and have never received R-related misogynist comments. The R community supports the R-Ladies organization from the very top, such as in the R Project&rsquo;s Forwards task force, and the amount of attention R-Ladies get from UseR! conferences and rstudio::conf. It was also said that while R contributors are still predominantly male, at least there are many more women than other programming communities, <a href="https://reshamas.github.io/why-women-are-flourishing-in-r-community-but-lagging-in-python/">including Python and Java</a>.</p>
-
 <p><strong>The RStudio integrated development environment (IDE)</strong> I like how I can see what&rsquo;s in the environment, the files I have, and help pages in one place. RStudio also works seamlessly with other packages developed by the RStudio company, such as <code>rmarkdown</code>, <code>shiny</code>, <code>testthat</code>, and <code>devtools</code>, by providing shortcuts and easy to use buttons and panes for those packages. Plus those packages are great. I also really like the git panel, which saves a lot of thinking needed to use git from the command line. RStudio server is also easy to use - you don&rsquo;t need to ssh to use it and the bash terminal inside it. <code>ssh</code> can be scary to those who are unfamiliar with the command line. What&rsquo;s even cooler, we can make slides, write books, and build websites within RStudio, and it has just in time compilation for LATEX math; those are very helpful to communicate results of our data analysis. Now I use RStudio instead of Microsoft Word as the text editor, and this blog itself is made with <code>blogdown</code>, with posts written in RStudio. While I can use Jupyter notebook for R (and I have done so before), I prefer R notebook, and one of the reasons is the other stuff in RStudio. With R Markdown, RStudio gives us the best of both worlds of notebook and IDE.</p>
-
 <p><strong>Tidyverse</strong> It was said that R has a steep learning curve for beginners, and this was the case for me back in 2016. In 2017, I finally got comfortable with wrangling data with base R, but then I switched to the Tidyverse. It&rsquo;s so easy to learn and so intuitive that I picked it up within a month, so no more steep learning curve.</p>
-
 <p><strong>The RStudio company</strong> I just mentioned packages like Tidyverse, <code>rmarkdown</code>, <code>shiny</code>, <code>blogdown</code>, <code>bookdown</code>, and <code>devtools</code>. There&rsquo;re other packages I like, such as <code>roxygen2</code> and <code>keras</code> (I meaan the R package, not the Python package), also developed by RStudio. Using <code>roxygen2</code> to write documentations feels just like when I write casual comments to explain what my functions do; almost no LATEX is required. Furthermore, RStudio is developing RStudio cloud, in which we can set up a project with all the packages installed and share it with others so they can play with our project without having to worry about installing packages and all the complexities, especially when it comes to packages that require compilation. This is a great way to teach data science. The downside is that we only have 1GB of memory in the free plan so we can only use small datasets. RStudio&rsquo;s products are amazing, but they are either free or very expensive.</p>
-
 <p><strong>Metaprogramming</strong> This is what made the nice tidyeval, in which we can directly write column names without quoting, possible. This is also what made <code>shiny</code> nice; <code>shiny</code> allows us to write <code>html</code> in R style, a style that is more intuitive to R programmers.</p>
-
 <p><strong>R&rsquo;s flexibility</strong> This allows users to implement nice features for R that is absent in base R. For instance, say why do Python and MATLAB allow something like <code>x, y = vec</code>, where <code>vec</code> has 2 elements and this automatically unpacks the elements of <code>vec</code> into <code>x</code> and <code>y</code>, but not R? No problem; a package called <code>zeallot</code> implemented this feature. R&rsquo;s flexibility is also what made formulas and <code>ggplot2</code> possible. R doesn&rsquo;t inherently support interactive outputs? No problem, we&rsquo;ve got <code>shiny</code>, which looks interactive while doing everything in R&rsquo;s way. It&rsquo;s also convenient when different data types can be converted easily.</p>
-
 <p><strong>Interoperability</strong> What if there&rsquo;s a cool Python package that does not have equivalences in R? No problem, we&rsquo;ve got the package <code>reticulate</code>, which calls Python from R using R-like syntax. What if a colleague is using closed source software such as SAS? No problem, the package <code>plumber</code> allows us to write web APIs of our R code that can be used from any platform, the the <code>haven</code> package nicely deals with file formats of SAS. There&rsquo;re also R packages that allow us to call MATLAB and Julia from R. And there&rsquo;s the famous <code>Rcpp</code> that calls C++ functions from R and makes cool C++ libraries available to R users. As R is built on top of C, R comes with a C API. It&rsquo;s also possible to call Fortran from R; I don&rsquo;t really know how to do it, but I know that it&rsquo;s possible since I have used R packages that have Fortran code, such as <code>deSolve</code>, which is used to numerically solve differential equations.</p>
-
-<p><strong>Functional programming</strong> R is a functional programming language. Functional programming is the part of Hadley Wickham&rsquo;s Advanced R that I enjoyed the most. It&rsquo;s just cool to pass functions as arguments, write functions that return functions, and write functions that modify behaviors of functions. I also find R&rsquo;s function-centric style of object oriented programming more intuitive to non-computer science majors in many cases than C++&rsquo;s style. In R, methods belong to functions rather than objects (for S3 and S4, which are the most commonly used, but this is not the case for R6). It&rsquo;s nice that I can implement new methods for classes from packages I often use, such as <code>Seurat</code>. This is kind of like a function is a service, and whether a function has a method for a class is like whether that service is provided for different kinds of customers. For instance, say we have a function restaurant, and there&rsquo;re classes vegetarians, Muslims, and Jews, and those without dietary restrictions are &ldquo;default&rdquo;. When a function has a method for a class, it is providing service to the class, just as a Halal restaurant is a method of function restaurant for class Muslim. C++&rsquo;s object oriented programming is more like the class is something like a phone, which has methods like texting and calling. At least in the case of single cell RNA-seq, it&rsquo;s more intuitive to think about services provided to those datasets (like in R) than those datasets having some special powers (like in C++). That said, I may be biased, since I&rsquo;m not experienced enough with C++ and Python, in which methods belong to classes.</p>
-
+<p><strong>Functional programming</strong> R is a functional programming language. Functional programming is the part of Hadley Wickham&rsquo;s Advanced R that I enjoyed the most. It&rsquo;s just cool to pass functions as arguments, write functions that return functions, and write functions that modify behaviors of functions. I also find R&rsquo;s function-centric style of object oriented programming more intuitive to non-computer science majors in many cases than C++'s style. In R, methods belong to functions rather than objects (for S3 and S4, which are the most commonly used, but this is not the case for R6). It&rsquo;s nice that I can implement new methods for classes from packages I often use, such as <code>Seurat</code>. This is kind of like a function is a service, and whether a function has a method for a class is like whether that service is provided for different kinds of customers. For instance, say we have a function restaurant, and there&rsquo;re classes vegetarians, Muslims, and Jews, and those without dietary restrictions are &ldquo;default&rdquo;. When a function has a method for a class, it is providing service to the class, just as a Halal restaurant is a method of function restaurant for class Muslim. C++'s object oriented programming is more like the class is something like a phone, which has methods like texting and calling. At least in the case of single cell RNA-seq, it&rsquo;s more intuitive to think about services provided to those datasets (like in R) than those datasets having some special powers (like in C++). That said, I may be biased, since I&rsquo;m not experienced enough with C++ and Python, in which methods belong to classes.</p>
 <p><strong>Culture for open and reproducible research</strong> Honestly I really think I should work on this. We have the cool organization <a href="https://ropensci.org">rOpenSci</a>, and packages like <code>rmarkdown</code>, <code>knitr</code>, and <code>workflowr</code> that help to make research reproducible.</p>
-
 <p><strong>Documentations</strong> Functions are usually very well-explained and have examples. Furthermore, Bioconductor requires examples in function documentations and vignettes in packages. The C++ linear algebra library Eigen has such terrible documentation that I just gave up when trying to learn to use it; that&rsquo;s why I use Armadillo.</p>
-
 <p><strong>The built-in statistics functions</strong> R is built by statisticians, for statisticians, so of course it has good built-in statistics functionality. We don&rsquo;t need to install extra packages to do linear regression, generalized linear models, ANOVA, Student&rsquo;s t-test, PCA, MDS, logistic regression, and etc.</p>
-
 <p><strong>Vectorization</strong>, all the amazing ways to avoid reading and writing loops, and the <strong>expressive power</strong> in general to make R more human readable. Yes, someone has to write loops somewhere, but it doesn&rsquo;t have to be you, to paraphrase Jenny Bryan in the <a href="https://resources.rstudio.com/webinars/thinking-inside-the-box-you-can-do-that-inside-a-data-frame-april-jenny-bryan">Thinking Inside the Box</a> RStudio webinar. For example, which one is easier to read, write, and reason with:</p>
-
 <pre><code>sum(x)
-</code></pre>
-
-<p>Or</p>
-
+</code></pre><p>Or</p>
 <pre><code>out &lt;- 0
 for (i in seq_along(x)) {
   out &lt;- out + 1
 }
-</code></pre>
-
-<p>R can help us to avoid writing loops in more complicated cases as well. For instance, for a homework assignment in which we have to find the number of transcript from the Ensembl human transcriptome, in R, it&rsquo;s simply</p>
-
+</code></pre><p>R can help us to avoid writing loops in more complicated cases as well. For instance, for a homework assignment in which we have to find the number of transcript from the Ensembl human transcriptome, in R, it&rsquo;s simply</p>
 <pre><code>library(Biostrings)
 cdna &lt;- readDNAStringSet(&quot;./hs_cdna.fa.gz&quot;)
 length(cdna)
-</code></pre>
-
-<p>How many base pairs are there in this transcriptome? Easy:</p>
-
+</code></pre><p>How many base pairs are there in this transcriptome? Easy:</p>
 <pre><code>sum(width(cdna))
-</code></pre>
-
-<p>But my colleagues who use biopython have to write hard to read loops to accomplish these. Another example of avoiding writing loops is how <a href="https://tidymodels.github.io/rsample/articles/Working_with_rsets.html"><code>rsample</code></a> makes it unnecessary to write loops for cross validation. The <code>apply</code> family of functions and <code>purrr</code> allow us to think in terms of data frames, which is more intuitive from a data analysis point of view than loops. However, nesting a long anonymous function inside an <code>apply</code> or a <code>purrr</code> function makes the code hard to read.</p>
-
+</code></pre><p>But my colleagues who use biopython have to write hard to read loops to accomplish these. Another example of avoiding writing loops is how <a href="https://tidymodels.github.io/rsample/articles/Working_with_rsets.html"><code>rsample</code></a> makes it unnecessary to write loops for cross validation. The <code>apply</code> family of functions and <code>purrr</code> allow us to think in terms of data frames, which is more intuitive from a data analysis point of view than loops. However, nesting a long anonymous function inside an <code>apply</code> or a <code>purrr</code> function makes the code hard to read.</p>
 <h2 id="the-worst-of-r">The worst of R</h2>
-
 <p>Here are my least favorite aspects of R:</p>
-
 <p><strong>So slow!</strong> R, as a high level interpreted language, is pretty slow. Equivalent C++ code can often speed things up dozens if not hundreds of times. However, the R community has worked on improving R&rsquo;s performance. For instance, starting from R 3.4, functions are by default byte compiled, which makes them several times faster than if they&rsquo;re not byte compiled. Starting from R 3.5, packages are also by default byte compiled. Moreover, we&rsquo;ve got <code>Rcpp</code>, which makes C++ look more like R, so easier to use by R users. We&rsquo;ve also got powerful C++ libraries, such as the great Boost library, accessible from the R package <code>BH</code>, and the linear algebra libraries Eigen (<code>RcppEigen</code>) and Armadillo (<code>RcppArmadillo</code>). I really like Armadillo thanks to its documentation. The <code>foreach</code> and <code>parallel</code> packages also make parallel computing easy for R users; this can significantly speed up code when there&rsquo;re multiple cores. So yeah, with good coding practice (e.g. don&rsquo;t grow vectors, do vectorize, and etc.) and those tools, we can bypass the speed limit of R.</p>
-
 <p>However, more work should still be done to make R more efficient. For instance, while <code>mclapply</code> and <code>foreach</code> can speed up intensive and parallizable jobs, they also have large memory overhead since a copy of the data is made for each child R process and each child process does not know if memory is running out, so I often run out of memory when using <code>mclapply</code>. While <code>makeForkCluster</code> can allow the child processes to share objects in memory, this sometimes results into object not found errors in child processes which I don&rsquo;t have enough computer knowledge to resolve. Furthermore, when we really can&rsquo;t avoid writing loops, R loops are so slow and the memory overhead of <code>mclapply</code> and <code>foreach</code> is so high that we often have to resort to Rcpp, having to know one more programming language, though fortunately, we don&rsquo;t need to know that much and Rcpp and RStudio made C++ easier for R users.</p>
-
 <p><strong>Everything is loaded into memory</strong> This is becoming less and less practical as single cell RNA-seq datasets are getting larger and larger. Anyway, we can simply use a server that has a lot of memory. However, there&rsquo;re already many ways to bypass this obstacle, such as <code>hdf5r</code> and <code>rhdf5</code>, R interfaces to the C library <code>hdf5</code>, which allow us to manipulate data on disk; only part of the data is loaded into memory and operations are done piecemeal. There&rsquo;s also <code>sparklyr</code>, which allows us to use the nice <code>dplyr</code> syntax to manipulate big data on Spark. There&rsquo;re also packages like <code>bigmemory</code>, <code>DelayedMemory</code>, and etc. that make life easier when dealing with data that don&rsquo;t fit into memory. That said, there&rsquo;s a bit of learning curve, and before getting to know those package, I have tried to foolishly load large datasets into memory, causing R to crash.</p>
-
 <p>Related to the last point: <strong>There isn&rsquo;t an easy way to stream files line by line</strong>, which can be done easily in Python and C++. When we do have to process a file line by line, we have to load it entirely, process it entirely, and write it entirely, rather than process line by line and write line by line. That said, someone in the R community is working a way around this. For instance, see the <a href="https://github.com/edwindj/chunked/"><code>chunked</code> package</a>.</p>
-
 <p><strong>R is not backward compatible</strong> This is a complaint from some of my colleagues and the reason why R does not get updated in one of our lab&rsquo;s servers. However, I haven&rsquo;t experienced this problem myself since I update packages in my computer and personal directory very often so normally I use the newest version. Perhaps this is because R users tend not to be computer science majors and don&rsquo;t know the best practices of software life cycle, such as that a function or a function argument that will be disabled soon should first be deprecated and kept functional for a while so people using old code won&rsquo;t immediately get into trouble.</p>
-
 <p><strong>Too many options for the same task</strong> This is the flip side of the vibrancy of the R ecosystem. Often we have several different packages that do the same thing, such as <code>irlba</code>, <code>rsvd</code>, base R&rsquo;s <code>prcomp</code>, and several other packages can all do PCA. Sometimes this can be overwhelming &ndash; which one shall I use? How shall I decide? This is happening in the field of single cell RNA-seq. According to <a href="https://www.scrna-tools.org/analysis">this database of scRNA-seq tools</a>, as of the writing of this post, there are already 108 packages for clustering, 96 for dimension reduction, 66 for data normalization, and 54 for differential expression. Those are parts of the standard, basic scRNA-seq data analysis pipeline, and we already have too many choices. While not all of them are written in R, R is by far the most commonly used language here. But who has the time to read all those papers behind those packages to decide which one to use? Even worse, this kind of papers often present the packages as working better than they actually do. So what to do? Just in R, even for comprehensive packages that cover multiple steps of scRNA-seq data analysis, we already have several options &ndash; <code>Seurat</code>, <code>scater</code>, <code>pagoda2</code> &ndash; and more are coming up. Which one to use? Guess what? Too lazy to decide, so I&rsquo;ll stick to good old <code>Seurat</code> since this is where I got started and good old log1p normalization, PCA, tSNE, and Louvian clustering, since I use them for exploratory data analysis, which is pretty qualitative anyway. I&rsquo;ll only consider something fancier when they become dependencies when writing packages or when they inform experiment design.</p>
-
 <p><strong>Some long running commands can&rsquo;t be interrupted</strong> without force killing the R session, and while long running commands are executing, RStudio becomes really slow for tasks unrelated to that running job such as looking up documentation and when an interruption is necessary, RStudio&rsquo;s &ldquo;stop&rdquo; button above the console often doesn&rsquo;t work, at least not until waiting for quite a while. When I have to use that R session and don&rsquo;t want to wait, I have to go to the terminal to kill the R session.</p>
-
-<p><strong>R is too flexible</strong> Sometimes it&rsquo;s hard to predict the output especially when matrices and data frames with only one columns are automatically converted to vectors, when data types are so casually converted, when something somehow returns a vector while you expect a scalar, and when there&rsquo;re objects of length 0, unless you know R inside out and use some not so well-known techniques that prevent those from happening, such as <code>drop = FALSE</code> and <code>vapply</code>. C++&rsquo;s rigidity regarding data types can prevent those problems from the beginning, but R&rsquo;s flexibility leads to more convenience in interactive use.</p>
-
+<p><strong>R is too flexible</strong> Sometimes it&rsquo;s hard to predict the output especially when matrices and data frames with only one columns are automatically converted to vectors, when data types are so casually converted, when something somehow returns a vector while you expect a scalar, and when there&rsquo;re objects of length 0, unless you know R inside out and use some not so well-known techniques that prevent those from happening, such as <code>drop = FALSE</code> and <code>vapply</code>. C++'s rigidity regarding data types can prevent those problems from the beginning, but R&rsquo;s flexibility leads to more convenience in interactive use.</p>
 <p><strong>Syntax is often inconsistent across packages</strong>, so I have to waste some time trying to learn new syntaxes. This isn&rsquo;t a problem within the Tidyverse, but look at the myriads of machine learning packages, and see how their syntaxes are different. That why Max Kuhn wrote the <a href="http://topepo.github.io/caret/index.html"><code>caret</code> package</a>, to make syntax consistent for over 200 machine learning packages, and that&rsquo;s also an objective of the newer and more Tidyverse-like <a href="https://github.com/tidymodels/tidymodels"><code>tidymoodels</code> metapackage</a>. This is also why Bioconductor urges developers to use existing Bioconductor data structures.</p>
-
 <p><strong>We need more computer science professionals!</strong> When I read source code of packages to better understand how they work, I&rsquo;m often so appalled by how inefficient the implementation is. Jenny Bryan said in <a href="https://www.youtube.com/watch?v=IzRn-QnOhug&amp;t=2739s">her 2018 UseR! presentation</a> that computer scientists and engineers tend less to use R, while those in natural sciences, social sciences, and (of course) statistics tend more to use R. We really need more computer science professionals, at least to make R more efficient. What bothers me more is that R is often considered a second class citizen by computer scientists. Probably as a result, cool new deep learning frameworks (deep down, they&rsquo;re still based on C++) don&rsquo;t get to R first.</p>
-
-<p>Some people with a computer science background may find R weird, though this is not a problem to me. I remember back in a rotation, an older graduate student said he immediately quit R as soon as he saw that stupid arrow. Anyway, I&rsquo;m perfectly fine with using <code>&lt;-</code>. Do you know that there&rsquo;s also <code>-&gt;</code> in R? Well, English speakers may find Arabic weird in that Arabic has declension and is written from right to left, but this doesn&rsquo;t mean that Arabic is not an expressive language that has great literature. BTW, I just found out that there&rsquo;s a programming language entirely in Arabic script called <a href="http://nas.sr/قلب/">Qalb (قلب)</a>, and just like R, it&rsquo;s a functional programming language!</p>
-
+<p>Some people with a computer science background may find R weird, though this is not a problem to me. I remember back in a rotation, an older graduate student said he immediately quit R as soon as he saw that stupid arrow. Anyway, I&rsquo;m perfectly fine with using <code>&lt;-</code>. Do you know that there&rsquo;s also <code>-&gt;</code> in R? Well, English speakers may find Arabic weird in that Arabic has declension and is written from right to left, but this doesn&rsquo;t mean that Arabic is not an expressive language that has great literature. BTW, I just found out that there&rsquo;s a programming language entirely in Arabic script called <a href="http://nas.sr/%D9%82%D9%84%D8%A8/">Qalb (قلب)</a>, and just like R, it&rsquo;s a functional programming language!</p>
 <p><em>About the cover image: A long time ago, when I was new to <code>Rcpp</code>, I read a blog post about using R to make beautiful plots of the <a href="https://fronkonstin.com/2017/11/07/drawing-10-million-points-with-ggplot-clifford-attractors/">Clifford attractor</a>, and tried it out with <code>Rcpp</code>. This is one of the images I produced, using the parameters in that blog post. I plotted 10 million points by <code>ggplot2</code>; there were no problems at all.</em></p>
 
               
@@ -375,8 +350,8 @@ length(cdna)
             
               
             
-            
-  <div class="post-actions-wrap">
+            <div class="post-actions-wrap">
+  
       <nav >
         <ul class="post-actions post-action-nav">
           
@@ -390,7 +365,7 @@ length(cdna)
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/08/09/the-best-and-worst-parts-of-being-autistic/" data-tooltip="The Best and Worst Parts of Being Autistic">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/29/lorenz-attractor-animation-gganimate/" data-tooltip="Lorenz attractor animation (gganimate)">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -441,8 +416,8 @@ length(cdna)
         </a>
       </li>
     </ul>
-  </div>
-
+  
+</div>
 
             
               
@@ -455,17 +430,14 @@ length(cdna)
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2019 Lambda Moses. All Rights Reserved
+    &copy; 2020 Lambda Moses. All Rights Reserved
   </span>
 </footer>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
       </div>
       <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
-        
-  <div class="post-actions-wrap">
+        <div class="post-actions-wrap">
+  
       <nav >
         <ul class="post-actions post-action-nav">
           
@@ -479,7 +451,7 @@ length(cdna)
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/08/09/the-best-and-worst-parts-of-being-autistic/" data-tooltip="The Best and Worst Parts of Being Autistic">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/29/lorenz-attractor-animation-gganimate/" data-tooltip="Lorenz attractor animation (gganimate)">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -530,8 +502,8 @@ length(cdna)
         </a>
       </li>
     </ul>
-  </div>
-
+  
+</div>
 
       </div>
       <div id="share-options-bar" class="share-options-bar" data-behavior="4">
@@ -567,11 +539,11 @@ length(cdna)
       <i class="fa fa-remove"></i>
     </div>
     
-      <img id="about-card-picture" src="//www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
     
     <h4 id="about-card-name">Lambda Moses</h4>
     
-      <div id="about-card-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech</div>
+      <div id="about-card-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying computational biology at Caltech</div>
     
     
       <div id="about-card-job">
@@ -590,179 +562,10 @@ length(cdna)
   </div>
 </div>
 
-    <div id="algolia-search-modal" class="modal-container">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="close-button"><i class="fa fa-close"></i></span>
-      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
-        <span class="searchby-algolia-text text-color-light text-small">by</span>
-        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
-      </a>
-      <i class="search-icon fa fa-search"></i>
-      <form id="algolia-search-form">
-        <input type="text" id="algolia-search-input" name="search"
-          class="form-control input--large search-input" placeholder="Search" />
-      </form>
-    </div>
-    <div class="modal-body">
-      <div class="no-result text-color-light text-center">no post found</div>
-      <div class="results">
-        
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/03/03/color-palettes-inspired-by-islamic-art/">
-                <h3 class="media-heading">Color palettes inspired by Islamic art</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This post is about my new R package IslamicArt, which provides color palettes inspired by Islamic art. Disclaimer: While I accept the Islamic theology, ethnically speaking, I’m not from the Middle East, North Africa, Central Asia, South Asia, or Southeast Asia. However, I do deeply appreciate art and philosophy from what’s conventionally known as the Islamic world as well as Sufism. This R package is only about colors, not about theology.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/03/02/r-blogs-i-follow/">
-                <h3 class="media-heading">R blogs I follow</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This page is about R resources. I also have a list of resources about dialogues between science and religion.
-One of my favorite aspects of R is the vibrant R community. A way to learn from the community - new tools, cool efficient tricks, something to note about data analysis - is reading blog posts. Actually, I learnt parallel programming in R entirely from blog posts. These are the R blogs I follow:</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/03/02/when-principal-component-is-not-unique/">
-                <h3 class="media-heading">When principal component is not unique</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This quarter, I’m TAing my adviser’s class on computational biology. Though I have taken this class a year ago and got an A, TAing really deepened my understanding of the course material, much of which I have long been using routinely without thinking, such as principal component analysis (PCA).
-On the midterm, there was a problem asking students to give an example of 8 points in \(\mathbb{R}^2\) that do not have a unique 1 dimensional principal component projection.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/02/15/my-favorite-and-least-favorite-aspects-of-r/">
-                <h3 class="media-heading">My Favorite and Least Favorite Aspects of R</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Feb 2, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">In September 2015, as I started working in a lab that requires bioinformatics skills, I made a new friend whose name is R. Before then, the last time I programmed was in 2008, in C, and I didn&rsquo;t do well in it. Then R has become my de facto mother tongue in programming. Three years later, I&rsquo;m writing a package for single cell RNA-seq to be submitted to Bioconductor, and I have fixed bugs in other packages.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/08/09/the-best-and-worst-parts-of-being-autistic/">
-                <h3 class="media-heading">The Best and Worst Parts of Being Autistic</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Aug 8, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">I have debated for a while whether I should write this post. Eventually I decided to write it, since first, even if it may harm my opportunities of employment after I graduate, I don&rsquo;t want to work with someone who discriminates against autistics anyway because passing as neurotypical is very stressful; I need to reserve my energy for the real cool work. Second, we need to make the positive aspects of autism more well-known to reduce discrimination and increase acceptance.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/07/29/lorenz-attractor-animation-gganimate/">
-                <h3 class="media-heading">Lorenz attractor animation (gganimate)</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">I have previously written about making the iconic Lorenz attractor animation with plotly; see that previous post for what the Lorenz system is. In the UseR! conference this year, Thomas Lin Pedersen presented the brand new version of gganimate which implements a grammar of animation, much like the grammar of graphics in ggplot2. In the older version by David Robinson, animation was made by adding an aes called frame. Now it’s just like adding geom_*s, scale_*s, stat_*s, and etc.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/07/28/lorenz-attractor-animation-plotly/">
-                <h3 class="media-heading">Lorenz attractor animation (Plotly)</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This is the first post in this blog.
-## [1] &quot;Hello World!&quot; Once for a class assignment, we were asked to control the Lorenz system. The instructor recommended us to use MATLAB for assignments, but since I’m inexperienced in MATLAB, I decided to use R to do the assignments, and used the package plotly to make interactive 3D plots of phase portraits1 of the Lorenz system.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/07/28/resources/">
-                <h3 class="media-heading">Resources for science and religion</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Here are some resources on dialogues between science and religion across faiths that I found helpful. There are many more websites and books on science and religion than are listed here; I only chose the ones I find the most helpful, and this list will continue to grow as I discover more resources. I have chosen resources that support mainstream science and have intellectual rigor. Note that while these resources all seem to oppose the common belief that science and religion are in essential conflict and cannot be reconciled (a.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-      </div>
-    </div>
-    <div class="modal-footer">
-      <p class="results-count text-medium"
-         data-message-zero="no post found"
-         data-message-one="1 post found"
-         data-message-other="{n} posts found">
-         8 posts found
-      </p>
-    </div>
-  </div>
-</div>
+    
+
     
   
-    
     <div id="cover" style="background-image:url('https://res.cloudinary.com/lambdamoses/image/upload/v1532889849/20171105_155503.jpg');"></div>
   
 
@@ -773,9 +576,23 @@ On the midterm, there was a problem asking students to give an example of 8 poin
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
 
-<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
 
 
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
 
 
   
@@ -803,6 +620,7 @@ On the midterm, there was a problem asking students to give an example of 8 poin
       </script>
     
   
+
 
 
 

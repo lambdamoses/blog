@@ -32,7 +32,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [author]
   name = "Lambda Moses"
-  bio = "Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying systems biology at Caltech"
+  bio = "Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying computational biology at Caltech"
   job = "graduate student"
   location = "Los Angeles"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
@@ -89,15 +89,20 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   name = "Stack Overflow"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-stack-overflow\"></i>"
   url = "https://stackoverflow.com/users/8916916/lambda-moses"
-
 [[menu.misc]]
   weight = 1
   identifier = "blogroll"
-  name = "Blogroll"
+  name = "R Blogroll"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-link\"></i>"
   url = "/2019/03/02/r-blogs-i-follow"
 [[menu.misc]]
   weight = 2
+  identifier = "resources"
+  name = "Religion and Science"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-heart\"></i>"
+  url = "/2018/07/28/resources"
+[[menu.misc]]
+  weight = 3
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
@@ -117,7 +122,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # You can comment it to disable syntax highlighting
   #syntaxHighlighter = "highlight.js"
   
-  highlightjsVersion = "9.12.0"
+  highlightjsVersion = "9.18.0"
   highlightjsCDN = "//cdn.bootcss.com"
   highlightjsLang = ["r", "yaml"]
   highlightjsTheme = "atom-one-light"

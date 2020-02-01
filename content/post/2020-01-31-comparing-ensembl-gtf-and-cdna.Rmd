@@ -1,0 +1,396 @@
+---
+title: Comparing Ensembl GTF and cDNA
+author: Lambda Moses
+date: '`r Sys.Date()`'
+slug: comparing-ensembl-gtf-and-cdna
+categories:
+  - R
+  - bioinformatics
+tags:
+  - ensembl
+  - genome annotation
+  - cDNA
+keywords:
+  - tech
+thumbnailImage: "img/venn.png"
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+It seems that most people think Ensembl's GTF file and cDNA fasta file mean the same transcripts: 
+
+```{r echo=FALSE}
+blogdown::shortcode('tweet', '1029018660374044672')
+```
+
+However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl's GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads. But how exactly does the GTF annotation differ from cDNA? This isn't very clear on the Ensembl website. In this blog post, I'll answer the following questions:
+
+* What kind of genes do those non-overlapping transcripts belong to?
+* For the transcripts present in both, do the GTF annotation and the cDNA fasta file mean the same sequences?
+
+For now, I will analyze Ensembl's human genome annotations; I suspect that the same rule applies to other species as well, especially vertebrates.
+```{r, message=FALSE}
+library(tidyverse)
+library(VennDiagram)
+library(biomartr)
+library(ggpubr)
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(Biostrings)
+library(plyranges)
+library(GenomeInfoDb)
+library(GenomicFeatures)
+library(BUSpaRse)
+library(here)
+source(here("code", "plotting.R")) # See GitHub repo of this blog
+```
+
+# Download files
+```{r}
+# Download cDNA fasta file
+if (!file.exists(here("reference", "hs_cdna99.fa.gz"))) {
+  download.file("ftp://ftp.ensembl.org/pub/release-99/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz",
+                destfile = here("reference", "hs_cdna99.fa.gz"))
+}
+```
+
+```{r}
+# Download GTF file
+gtf_fn <- getGTF(db = "ensembl", organism = "Homo sapiens", path = here("reference"))
+```
+
+```{r}
+cdna <- readDNAStringSet(here("reference", "hs_cdna99.fa.gz"))
+gtf <- read_gff(gtf_fn)
+```
+
+The sequence names in the Ensembl GTF file contains genome annotation information, which I'll compare to the corresponding GTF annotation.
+```{r}
+head(names(cdna))
+```
+
+```{r}
+head(gtf)
+```
+
+# Overlaps
+```{r}
+# Extract transcript ID from fasta sequence name
+cdna_tx <- str_extract(names(cdna), "^ENST\\d+")
+# Transcript IDs from GTF
+gtf_tx <- unique(gtf$transcript_id)
+gtf_tx <- gtf_tx[!is.na(gtf_tx)]
+length(cdna_tx)
+length(gtf_tx)
+```
+
+In total, there are 190432 transcripts in the fasta file, and 227818 in the GTF file.
+
+```{r, fig.width=3, fig.height=2.5, fig.align='center'}
+v <- draw.pairwise.venn(length(gtf_tx), length(cdna_tx),
+                        length(intersect(cdna_tx, gtf_tx)),
+                        category = c("GTF", "cDNA"),
+                        fill = c("purple", "blue"),
+                        alpha = c(0.5, 0.5))
+grid.draw(v)
+grid.newpage()
+```
+
+While most transcripts overlap, a sizable minority don't.
+
+# What kind of genes?
+It would not be so terrible if the transcripts that don't overlap between the GTF file and cDNA fasta file are all from genes most people don't care about, such as pseudogenes. Or would those genes be haplotype variants? Is this the case? Here I'll use Ensembl version 99, which is the most recent as of writing.
+
+The Ensembl's FTP site has README files for each directory. For GTF files, the README file says
+
+> GTF provides access to all annotated transcripts which make
+up an Ensembl gene set. Annotation is based on alignments of
+biological evidence (eg. proteins, cDNAs, RNA-seq) to a genome assembly.
+The annotation dumped here is transcribed and translated from the 
+genome assembly and is not the original input sequence data that 
+we used for alignment. Therefore, the sequences provided by Ensembl 
+may differ from the original input sequence data where the genome 
+assembly is different to the aligned sequence. 
+```
+
+For cDNA files, the README says:
+
+> These files hold the cDNA sequences corresponding to Ensembl gene 
+predictions. cDNA consists of transcript sequences for actual and possible
+genes, including pseudogenes, NMD and the like. See the file names 
+explanation below for different subsets of both known and predicted 
+transcripts.
+
+> ------------
+> FILE NAMES
+> ------------
+> The files are consistently named following this pattern:
+\<species\>.\<assembly\>.\<sequence type\>.\<status\>.fa.gz
+
+> \<species\>: The systematic name of the species.
+
+> \<assembly\>: The assembly build name.
+
+> \<sequence type\>: cdna for cDNA sequences
+ 
+> \<status\>:
+
+>  * 'cdna.all' - the super-set of all transcripts resulting from
+     Ensembl gene predictions (see more below).
+
+>  * 'cdna.abinitio' - transcripts resulting from 'ab initio' gene prediction
+     algorithms such as SNAP and GENSCAN. In general all 'ab initio'
+     predictions are solely based on the genomic sequence and do not
+     use other experimental evidence. Therefore, not all GENSCAN or SNAP
+     cDNA predictions represent biologically real cDNAs.
+     Consequently, these predictions should be used with care.
+
+
+The one I used is `Homo_sapiens.GRCh38.cdna.all.fa.gz`, not the `abinitio` one. However, the README doesn't seem to be clear about how the GTF annotation differs from that in the cDNA fasta file. Here I'll find out about such differences.
+
+## GTF only
+
+```{r}
+gtf_meta <- as.data.frame(gtf[gtf$type == "transcript"])
+gtf_meta <- gtf_meta %>% 
+  mutate(gtf_only = !transcript_id %in% cdna_tx)
+```
+
+```{r}
+n_txs <- gtf_meta %>% 
+  count(gtf_only, gene_biotype)
+```
+
+How many transcripts are there in each gene biotype, and how many transcripts in each biotype are only in the GTF file? For a description of Ensembl gene biotypes, see [this page](http://www.ensembl.org/info/genome/genebuild/biotypes.html). 
+
+```{r, fig.height=7, fig.width=7}
+plot_bar_patch(n_txs, 3, "gtf_only", "GTF only", 
+               "Number of transcripts in each gene biotype in GTF file")
+```
+
+Proportion of GTF only transcripts in each biotype
+
+```{r, fig.width=7, fig.height=7}
+p <- ggplot(gtf_meta, aes(fct_reorder(gene_biotype, gtf_only, .fun = mean), fill = gtf_only)) +
+  geom_bar(position = "fill", alpha = 0.5) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0))) +
+  scale_fill_discrete(name = "GTF only") +
+  labs(x = "gene biotype", y = "proportion") +
+  coord_flip() + theme_bw() +
+  labs(x = "") +
+  theme(legend.position = "top", legend.justification = c(0,0.5),
+        legend.margin = margin(t = 14))
+# To place title further to the left; will be fixed in ggplot2 devel
+annotate_figure(p, fig.lab = "Proportion of GTF only transcripts in each gene biotype in GTF",
+                fig.lab.pos = "top.left", fig.lab.size = 14)
+```
+
+It's now apparent that some transcripts are only present in the GTF file because their biotypes are excluded from the cDNA file. These GTF only biotypes are non-coding RNAs, except TEC, which stands for _To be Experimentally Confirmed_. However, Ensembl has a separately fasta file for lncRNA. Some non-coding RNAs are not polyadenylated (e.g. mature miRNAs), which means they are omitted by polyA selection prior to RNA-seq. However, some lncRNAs are polyadenylated, and [Cell Ranger's reference](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/advanced/references) does include lincRNA (long intergenic non-coding RNA).
+
+## cDNA fasta only
+
+What about cDNA only transcripts? Are they also from specific gene biotypes?
+
+```{r}
+# Extract annotation from fasta sequence names
+cdna_meta <- tibble(transcript_id = cdna_tx,
+                    cr = str_extract(names(cdna),
+                                     "(?<=((chromosome)|(scaffold)):GRCh38:).*?(?=\\s)"),
+                    gene_biotype = str_extract(names(cdna), "(?<=gene_biotype:).*?(?=\\s)"),
+                    gene_id = str_extract(names(cdna), "(?<=gene:).*?(?=\\.)"),
+                    gene_symbol = str_extract(names(cdna), "(?<=gene_symbol:).*?(?=\\s)"),
+                    cdna_only = !transcript_id %in% gtf_tx) %>% 
+  separate(cr, into = c("seqnames", "start", "end", "strand"), sep = ":") %>% 
+  mutate(start = as.integer(start),
+         end = as.integer(end),
+         strand = case_when(
+           strand == "1" ~ "+",
+           strand == "-1" ~ "-",
+           TRUE ~ "*"
+         ))
+```
+
+```{r}
+head(cdna_meta)
+```
+
+```{r}
+n_txs_cdna <- cdna_meta %>% 
+  count(cdna_only, gene_biotype)
+```
+
+Number of transcripts in each biotype and number within each biotype that is only in the fasta file
+```{r, fig.width=7, fig.height=7}
+plot_bar_patch(n_txs_cdna, 3, col_fill = "cdna_only", name = "cDNA only", 
+               title = "Number of transcripts in each gene biotype in cDNA fasta")
+```
+
+Proportion of transcripts that are only in the fasta file in each biotype
+```{r, fig.width=7, fig.height=7}
+p <- ggplot(cdna_meta, aes(fct_reorder(gene_biotype, cdna_only, .fun = mean), fill = cdna_only)) +
+  geom_bar(position = "fill", alpha = 0.5) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0))) +
+  scale_fill_discrete(name = "cDNA only") +
+  labs(x = "gene biotype", y = "proportion") +
+  coord_flip() + theme_bw() +
+  labs(x = "") +
+  theme(legend.position = "top", legend.justification = c(0,0.5),
+        legend.margin = margin(t = 14))
+annotate_figure(p, 
+                fig.lab = "Proportion of cDNA only transcripts in each gene biotype in cDNA fasta",
+                fig.lab.pos = "top.left", fig.lab.size = 14)
+```
+
+Apparently, cDNA fasta only transcripts are not specific to a particular biotype.
+
+## Chromosomes
+```{r}
+chrs <- c(as.character(1:22), "X", "Y", "MT")
+```
+
+Gene annotations often contain information of not only the chromosomes, but also scaffolds.
+```{r}
+seqlevels(gtf)
+```
+
+The GL* and KI* things are scaffolds, which are regions not assembled into chromosomes. Genomes, such as `BSgenome.Hsapiens.UCSC.hg38` and Ensembl's top level genome (`Homo_sapiens.GRCh38.dna.toplevel.fa.gz`, downloaded by `biomartr::getGenome`), also contain haplotype information. Sometimes multiple Ensembl IDs correspond to the same gene symbol, as those Ensembl IDs correspond to different haplotypes. In contrast, `Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz` does not have the scaffolds and haplotypes.
+
+Are the non-overlapping transcripts only on haplotypes or scaffolds?
+```{r, fig.height=7, fig.width=7}
+gtf_meta %>% 
+  mutate(seqname_type = case_when(
+    seqnames %in% chrs ~ "chromosome",
+    str_detect(seqnames, "^CHR_") ~ "haplotype",
+    TRUE ~ "scaffold"
+  )) %>% 
+  ggplot(aes(fct_rev(seqnames), fill = gtf_only)) +
+  geom_bar(position = position_dodge2(width = 0.9, preserve = "single")) +
+  scale_fill_discrete(name = "GTF only") +
+  coord_flip() +
+  facet_wrap(~ seqname_type, scales = "free", ncol = 1, strip.position = "right") +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)),
+                     breaks = scales::pretty_breaks(n = 7)) +
+  labs(x = "", title = "Number of transcripts for each seqname for GTF") +
+  theme(legend.position = "top", legend.justification = c(0,0.5))
+```
+
+Apparently GTF only transcripts are not specific to scaffolds or chromosomes, though some scaffolds have a small number of genes, all of which are GTF only. What about in the cDNA file?
+
+```{r}
+cdna_meta <- cdna_meta %>% 
+  mutate(
+    seqname_type = case_when(
+      seqnames %in% chrs ~ "chromosome",
+      str_detect(seqnames, "^CHR") ~ "haplotype",
+      TRUE ~ "scaffold"
+    ),
+    seqnames = fct_relevel(seqnames, c(chrs, setdiff(unique(seqnames), chrs) %>% sort()))
+  )
+```
+
+```{r, fig.width=7, fig.height=7}
+p <- ggplot(cdna_meta, aes(fct_rev(seqnames), fill = cdna_only)) +
+  geom_bar(position = position_dodge2(width = 0.9, preserve = "single")) +
+  coord_flip() +
+  scale_fill_discrete(name = "cDNA only") +
+  facet_wrap(~ seqname_type, scales = "free", ncol = 1, strip.position = "right") +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)), 
+                     breaks = scales::pretty_breaks(n = 7)) +
+  labs(x = "") +
+  theme(legend.position = "top", legend.justification = c(0,0.5), 
+        legend.margin = margin(t = 14))
+annotate_figure(p, fig.lab = "Number of transcripts for each seqname for cDNA fasta", 
+                fig.lab.pos = "top.left", fig.lab.size = 14)
+```
+
+```{r}
+cdna_meta %>% 
+  mutate(seqname_type = case_when(
+    seqnames %in% chrs ~ "chromosome",
+    str_detect(seqnames, "^CHR_") ~ "haplotype",
+    TRUE ~ "scaffold"
+  )) %>% 
+  filter(cdna_only) %>% 
+  count(seqname_type) %>% 
+  arrange(desc(n))
+```
+
+There're hundreds of haplotypes here. All the cDNA only transcripts are on haplotypes. As haplotypes can confuse alignment, for the purpose of aligning RNA-seq reads to the genome, haplotypes should better be excluded.
+
+# Same sequences?
+How about the transcripts shared between GTF and cDNA? Do those two sources mean the same sequence for the same transcript?
+
+```{r}
+inter <- gtf_meta %>% 
+  inner_join(cdna_meta, by = c("gene_id", "transcript_id", "seqnames"))
+```
+
+Do the GTF and cDNA files place the same transcripts at the same genomic ranges?
+```{r}
+all.equal(inter$start.x, inter$start.y)
+all.equal(inter$end.x, inter$end.y)
+all.equal(as.character(inter$strand.x), as.character(inter$strand.y))
+all.equal(inter$gene_biotype.x, inter$gene_biotype.y)
+```
+
+So the genomic ranges, strand, and gene biotypes do match. However, this is just for transcripts; exon annotations are absent from the sequence names of the cDNA fasta file. Are the exons also the same?
+
+```{r}
+unique(inter$seqnames)
+```
+
+Say we don't care about the scaffolds. I'll extract the transcriptome (only for genes also present in the cDNA fasta file) using the GTF file. `BSgenome.Hsapiens.UCSC.hg38` denotes chromosomes as something like `chr1`, while Ensembl just uses `1`, so I'll convert `BSgenome.Hsapiens.UCSC.hg38` to Ensembl style.
+```{r}
+gn <- BSgenome.Hsapiens.UCSC.hg38
+seqlevelsStyle(gn) <- "Ensembl"
+```
+
+```{r}
+# This will discard scaffolds
+gl <- BUSpaRse:::subset_annot(gn, gtf)
+# Only keep overlapping transcripts
+gl <- gl[gl$type == "exon" & gl$transcript_id %in% inter$transcript_id]
+# Exons are already sorted in ascending order in the GTF file, even for minus strand genes
+# Need to sort if not already sorted
+gl <- split(gl, gl$transcript_id)
+# Extract transcriptome
+tx_gtf <- extractTranscriptSeqs(gn, gl)
+```
+
+```{r}
+cdna_compare <- cdna
+names(cdna_compare) <- cdna_meta$transcript_id
+# sort transcripts from the cDNA file, discard scaffolds
+cdna_compare <- cdna_compare[names(tx_gtf)]
+```
+
+From the cDNA fasta:
+```{r}
+cdna_compare
+```
+
+Sequences extracted from genome with GTF file:
+```{r}
+tx_gtf
+```
+
+Do the transcript sequences at least have the same lengths?
+```{r}
+all.equal(width(tx_gtf), width(cdna_compare))
+```
+
+Are the sequences the same? Since I don't care how the sequences are different if they are different, no alignment is needed.
+```{r}
+all(pcompare(tx_gtf, cdna_compare) == 0)
+```
+
+Yes, the sequences are the same.
+
+# Conclusion
+The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file does not. The cDNA file contains haplotypes, while the GTF file does not. For alignment of RNA-seq reads from polyA selected techniques, non-coding RNAs in the GTF file probably aren't so important, unless you do care about polyadenylated lncRNAs, so it's fine to use the cDNA fasta file, but we should remove the haplotypes as they may cause confusion in alignment. However, if you are interested in non-coding RNAs, then download the ncRNA fasta file from Ensembl or extract the transcriptome with the GTF file. We've also got example R code here to filter by gene biotypes and to extract transcriptome from the genome with the GTF file.
+
+[^1]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1370684/
