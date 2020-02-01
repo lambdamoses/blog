@@ -434,4 +434,85 @@ cdna_compare &lt;- cdna_compare[names(tx_gtf)]</code></pre>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
 <p>The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file does not. The cDNA file contains haplotypes, while the GTF file does not. For alignment of RNA-seq reads from polyA selected techniques, non-coding RNAs in the GTF file probably aren’t so important, unless you do care about polyadenylated lncRNAs, so it’s fine to use the cDNA fasta file, but we should remove the haplotypes as they may cause confusion in alignment. However, if you are interested in non-coding RNAs, then download the ncRNA fasta file from Ensembl or extract the transcriptome with the GTF file. We’ve also got example R code here to filter by gene biotypes and to extract transcriptome from the genome with the GTF file.</p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>#&gt; R version 3.6.2 (2019-12-12)
+#&gt; Platform: x86_64-apple-darwin15.6.0 (64-bit)
+#&gt; Running under: macOS Catalina 10.15.1
+#&gt; 
+#&gt; Matrix products: default
+#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+#&gt; 
+#&gt; locale:
+#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+#&gt; 
+#&gt; attached base packages:
+#&gt;  [1] stats4    parallel  grid      stats     graphics  grDevices utils    
+#&gt;  [8] datasets  methods   base     
+#&gt; 
+#&gt; other attached packages:
+#&gt;  [1] rlang_0.4.4                       here_0.1                         
+#&gt;  [3] BUSpaRse_1.0.0                    GenomicFeatures_1.38.1           
+#&gt;  [5] AnnotationDbi_1.48.0              Biobase_2.46.0                   
+#&gt;  [7] plyranges_1.6.6                   BSgenome.Hsapiens.UCSC.hg38_1.4.1
+#&gt;  [9] BSgenome_1.54.0                   rtracklayer_1.46.0               
+#&gt; [11] Biostrings_2.54.0                 XVector_0.26.0                   
+#&gt; [13] GenomicRanges_1.38.0              GenomeInfoDb_1.22.0              
+#&gt; [15] IRanges_2.20.2                    S4Vectors_0.24.3                 
+#&gt; [17] BiocGenerics_0.32.0               ggpubr_0.2.4                     
+#&gt; [19] magrittr_1.5                      biomartr_0.9.2                   
+#&gt; [21] VennDiagram_1.6.20                futile.logger_1.4.3              
+#&gt; [23] forcats_0.4.0                     stringr_1.4.0                    
+#&gt; [25] dplyr_0.8.3                       purrr_0.3.3                      
+#&gt; [27] readr_1.3.1                       tidyr_1.0.2                      
+#&gt; [29] tibble_2.1.3                      ggplot2_3.2.1                    
+#&gt; [31] tidyverse_1.3.0                  
+#&gt; 
+#&gt; loaded via a namespace (and not attached):
+#&gt;  [1] colorspace_1.4-1            ggsignif_0.6.0             
+#&gt;  [3] ellipsis_0.3.0              rprojroot_1.3-2            
+#&gt;  [5] fs_1.3.1                    rstudioapi_0.10            
+#&gt;  [7] farver_2.0.3                bit64_0.9-7                
+#&gt;  [9] fansi_0.4.1                 lubridate_1.7.4            
+#&gt; [11] xml2_1.2.2                  knitr_1.27                 
+#&gt; [13] zeallot_0.1.0               jsonlite_1.6               
+#&gt; [15] Rsamtools_2.2.1             broom_0.5.4                
+#&gt; [17] dbplyr_1.4.2                compiler_3.6.2             
+#&gt; [19] httr_1.4.1                  backports_1.1.5            
+#&gt; [21] assertthat_0.2.1            Matrix_1.2-18              
+#&gt; [23] lazyeval_0.2.2              cli_2.0.1                  
+#&gt; [25] formatR_1.7                 htmltools_0.4.0            
+#&gt; [27] prettyunits_1.1.1           tools_3.6.2                
+#&gt; [29] gtable_0.3.0                glue_1.3.1                 
+#&gt; [31] GenomeInfoDbData_1.2.2      rappdirs_0.3.1             
+#&gt; [33] Rcpp_1.0.3                  cellranger_1.1.0           
+#&gt; [35] vctrs_0.2.2                 nlme_3.1-143               
+#&gt; [37] blogdown_0.17               xfun_0.12                  
+#&gt; [39] rvest_0.3.5                 lifecycle_0.1.0            
+#&gt; [41] ensembldb_2.10.2            XML_3.99-0.3               
+#&gt; [43] zlibbioc_1.32.0             scales_1.1.0               
+#&gt; [45] ProtGenerics_1.18.0         hms_0.5.3                  
+#&gt; [47] SummarizedExperiment_1.16.1 AnnotationFilter_1.10.0    
+#&gt; [49] lambda.r_1.2.4              yaml_2.2.0                 
+#&gt; [51] curl_4.3                    gridExtra_2.3              
+#&gt; [53] memoise_1.1.0               biomaRt_2.42.0             
+#&gt; [55] stringi_1.4.5               RSQLite_2.2.0              
+#&gt; [57] BiocParallel_1.20.1         pkgconfig_2.0.3            
+#&gt; [59] bitops_1.0-6                matrixStats_0.55.0         
+#&gt; [61] evaluate_0.14               lattice_0.20-38            
+#&gt; [63] labeling_0.3                GenomicAlignments_1.22.1   
+#&gt; [65] cowplot_1.0.0               bit_1.1-15.1               
+#&gt; [67] tidyselect_1.0.0            bookdown_0.17              
+#&gt; [69] R6_2.4.1                    generics_0.0.2             
+#&gt; [71] DelayedArray_0.12.2         DBI_1.1.0                  
+#&gt; [73] pillar_1.4.3                haven_2.2.0                
+#&gt; [75] withr_2.1.2                 RCurl_1.98-1.1             
+#&gt; [77] modelr_0.1.5                crayon_1.3.4               
+#&gt; [79] futile.options_1.0.1        utf8_1.1.4                 
+#&gt; [81] BiocFileCache_1.10.2        rmarkdown_2.1              
+#&gt; [83] progress_1.2.2              readxl_1.3.1               
+#&gt; [85] data.table_1.12.8           blob_1.2.1                 
+#&gt; [87] reprex_0.3.0                digest_0.6.23              
+#&gt; [89] openssl_1.4.1               RcppParallel_4.4.4         
+#&gt; [91] munsell_0.5.0               askpass_1.1</code></pre>
 </div>

@@ -393,4 +393,8 @@ Yes, the sequences are the same.
 # Conclusion
 The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file does not. The cDNA file contains haplotypes, while the GTF file does not. For alignment of RNA-seq reads from polyA selected techniques, non-coding RNAs in the GTF file probably aren't so important, unless you do care about polyadenylated lncRNAs, so it's fine to use the cDNA fasta file, but we should remove the haplotypes as they may cause confusion in alignment. However, if you are interested in non-coding RNAs, then download the ncRNA fasta file from Ensembl or extract the transcriptome with the GTF file. We've also got example R code here to filter by gene biotypes and to extract transcriptome from the genome with the GTF file.
 
+```{r}
+sessionInfo()
+```
+
 [^1]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1370684/
