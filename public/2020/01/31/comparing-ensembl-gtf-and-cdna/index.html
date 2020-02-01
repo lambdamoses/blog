@@ -347,7 +347,7 @@ gtf_fn &lt;- getGTF(db = &quot;ensembl&quot;, organism = &quot;Homo sapiens&quot
 <pre><code>#&gt; The *.gtf annotation file of &#39;Homo sapiens&#39; has been downloaded to &#39;/Users/lambda/Documents/fs2s/reference/Homo_sapiens.GRCh38.99_ensembl.gtf.gz&#39; and has been named &#39;Homo_sapiens.GRCh38.99_ensembl.gtf.gz&#39;.</code></pre>
 <pre class="r"><code>cdna &lt;- readDNAStringSet(here(&quot;reference&quot;, &quot;hs_cdna99.fa.gz&quot;))
 gtf &lt;- read_gff(gtf_fn)</code></pre>
-<p>The sequence names in the Ensembl GTF file contains genome annotation information, which I’ll compare to the corresponding GTF annotation.</p>
+<p>The sequence names in the Ensembl GTF file contain genome annotation information, which I’ll compare to the corresponding GTF annotation.</p>
 <pre class="r"><code>head(names(cdna))</code></pre>
 <pre><code>#&gt; [1] &quot;ENST00000434970.2 cdna chromosome:GRCh38:14:22439007:22439015:1 gene:ENSG00000237235.2 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRDD2 description:T cell receptor delta diversity 2 [Source:HGNC Symbol;Acc:HGNC:12255]&quot;                
 #&gt; [2] &quot;ENST00000415118.1 cdna chromosome:GRCh38:14:22438547:22438554:1 gene:ENSG00000223997.1 gene_biotype:TR_D_gene transcript_biotype:TR_D_gene gene_symbol:TRDD1 description:T cell receptor delta diversity 1 [Source:HGNC Symbol;Acc:HGNC:12254]&quot;                

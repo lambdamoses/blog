@@ -68,7 +68,7 @@ cdna <- readDNAStringSet(here("reference", "hs_cdna99.fa.gz"))
 gtf <- read_gff(gtf_fn)
 ```
 
-The sequence names in the Ensembl GTF file contains genome annotation information, which I'll compare to the corresponding GTF annotation.
+The sequence names in the Ensembl GTF file contain genome annotation information, which I'll compare to the corresponding GTF annotation.
 ```{r}
 head(names(cdna))
 ```
@@ -395,5 +395,3 @@ The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file
 ```{r}
 sessionInfo()
 ```
-
-[^1]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1370684/
