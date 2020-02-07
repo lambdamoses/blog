@@ -1,24 +1,319 @@
----
-title: Comparing Ensembl GTF and cDNA
-author: Lambda Moses
-date: '2020-02-07'
-slug: comparing-ensembl-gtf-and-cdna
-categories:
-  - R
-  - bioinformatics
-tags:
-  - ensembl
-  - genome annotation
-  - cDNA
-keywords:
-  - tech
-thumbnailImage: "img/venn.png"
----
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.63.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Lambda Moses">
+<meta name="keywords" content="tech">
+<meta name="description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file mean the same transcripts:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to pseudoalign RNA-seq reads.">
 
+
+<meta property="og:description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file mean the same transcripts:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to pseudoalign RNA-seq reads.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Comparing Ensembl GTF and cDNA">
+<meta name="twitter:title" content="Comparing Ensembl GTF and cDNA">
+<meta property="og:url" content="/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+<meta property="twitter:url" content="/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+<meta property="og:site_name" content="From System to System">
+<meta property="og:description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file mean the same transcripts:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to pseudoalign RNA-seq reads.">
+<meta name="twitter:description" content="It seems that most people think Ensembl’s GTF file and cDNA fasta file mean the same transcripts:
+Watch out! @ensembl&#39;s Fasta and GTF annotation files available via https://t.co/2AhCSnL7py do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?
+&mdash; K. Vitting-Seerup (@KVittingSeerup) August 13, 2018  However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to pseudoalign RNA-seq reads.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-02-07T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-02-07T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+      <meta property="article:section" content="bioinformatics">
+    
+  
+  
+    
+      <meta property="article:tag" content="ensembl">
+    
+      <meta property="article:tag" content="genome annotation">
+    
+      <meta property="article:tag" content="cDNA">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+  <meta property="og:image" content="/img/venn.png">
+  <meta property="twitter:image" content="/img/venn.png">
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=640">
+
+
+    <title>Comparing Ensembl GTF and cDNA</title>
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-124557538-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+<link rel="stylesheet" href="/css/atom-one-light.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">From System to System</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Lambda Moses</h4>
+        
+          <h5 class="sidebar-profile-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying computational biology at Caltech</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/lambdamoses">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/8916916/lambda-moses">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/2019/03/02/r-blogs-i-follow">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">R Blogroll</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/2018/07/28/resources">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-heart"></i>
+      
+      <span class="sidebar-button-desc">Religion and Science</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Comparing Ensembl GTF and cDNA
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-02-07T00:00:00Z">
+        
+  February 7, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/bioinformatics">bioinformatics</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
 
 
 <p>It seems that most people think Ensembl’s GTF file and cDNA fasta file mean the same transcripts:</p>
-{{% tweet "1029018660374044672" %}}
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Watch out! <a href="https://twitter.com/ensembl?ref_src=twsrc%5Etfw">@ensembl</a>&#39;s Fasta and GTF annotation files available via <a href="https://t.co/2AhCSnL7py">https://t.co/2AhCSnL7py</a> do not match (there are transcripts in the GTF not found in the Fasta file. Anyone else expected them to match?</p>&mdash; K. Vitting-Seerup (@KVittingSeerup) <a href="https://twitter.com/KVittingSeerup/status/1029018660374044672?ref_src=twsrc%5Etfw">August 13, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <p>However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl’s GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to pseudoalign RNA-seq reads. But how exactly does the GTF annotation differ from cDNA? This isn’t very clear on the Ensembl website. In this blog post, I’ll answer the following questions:</p>
 <ul>
 <li>What kind of genes do those non-overlapping transcripts belong to?</li>
@@ -530,3 +825,303 @@ cdna_compare &lt;- cdna_compare[names(tx_gtf)]</code></pre>
 #&gt; [89] openssl_1.4.1               RcppParallel_4.4.4         
 #&gt; [91] munsell_0.5.0               askpass_1.1</code></pre>
 </div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/ensembl/">ensembl</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/genome-annotation/">genome annotation</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/cdna/">cDNA</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/03/color-palettes-inspired-by-islamic-art/" data-tooltip="Color palettes inspired by Islamic art">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Lambda Moses. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/03/color-palettes-inspired-by-islamic-art/" data-tooltip="Color palettes inspired by Islamic art">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/02/07/comparing-ensembl-gtf-and-cdna/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2020%2F02%2F07%2Fcomparing-ensembl-gtf-and-cdna%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2020%2F02%2F07%2Fcomparing-ensembl-gtf-and-cdna%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2020%2F02%2F07%2Fcomparing-ensembl-gtf-and-cdna%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/f7a739781c41e528f1f2ce41ed0281fc?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Lambda Moses</h4>
+    
+      <div id="about-card-bio">Monotheist, Aspie, R lover, advocate for constructive dialogues between science and religion, studying computational biology at Caltech</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        graduate student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Los Angeles
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    <div id="cover" style="background-image:url('https://res.cloudinary.com/lambdamoses/image/upload/v1532889849/20171105_155503.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2020\/02\/07\/comparing-ensembl-gtf-and-cdna\/';
+          
+            this.page.identifier = '\/2020\/02\/07\/comparing-ensembl-gtf-and-cdna\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'fromsystosys';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

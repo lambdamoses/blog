@@ -28,7 +28,7 @@ It seems that most people think Ensembl's GTF file and cDNA fasta file mean the 
 blogdown::shortcode('tweet', '1029018660374044672')
 ```
 
-However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl's GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to align RNA-seq reads. But how exactly does the GTF annotation differ from cDNA? This isn't very clear on the Ensembl website. In this blog post, I'll answer the following questions:
+However, my colleagues Joseph Min and Sina Booeshaghi found that for several species, Ensembl's GTF file and cDNA fasta file do not have the same set of transcripts, so it would not be the same using the cDNA file as opposed to extracting the transcript sequences from the genome with the GTF file for a reference to pseudoalign RNA-seq reads. But how exactly does the GTF annotation differ from cDNA? This isn't very clear on the Ensembl website. In this blog post, I'll answer the following questions:
 
 * What kind of genes do those non-overlapping transcripts belong to?
 * For the transcripts present in both, do the GTF annotation and the cDNA fasta file mean the same sequences?
@@ -307,14 +307,8 @@ annotate_figure(p, fig.lab = "Number of transcripts for each seqname for cDNA fa
 
 ```{r}
 cdna_meta %>% 
-  mutate(seqname_type = case_when(
-    seqnames %in% chrs ~ "chromosome",
-    str_detect(seqnames, "^CHR_") ~ "haplotype",
-    TRUE ~ "scaffold"
-  )) %>% 
-  filter(cdna_only) %>% 
-  count(seqname_type) %>% 
-  arrange(desc(n))
+  count(cdna_only, seqname_type) %>% 
+  arrange(desc(cdna_only), desc(n)) %>% knitr::kable()
 ```
 
 There're hundreds of haplotypes here. All the cDNA only transcripts are on haplotypes. As haplotypes can confuse alignment, for the purpose of aligning RNA-seq reads to the genome, haplotypes should better be excluded.
@@ -389,7 +383,7 @@ all(pcompare(tx_gtf, cdna_compare) == 0)
 Yes, the sequences are the same.
 
 # Conclusion
-The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file does not. The cDNA file contains haplotypes, while the GTF file does not. For alignment of RNA-seq reads from polyA selected techniques, non-coding RNAs in the GTF file probably aren't so important, unless you do care about polyadenylated lncRNAs, so it's fine to use the cDNA fasta file, but we should remove the haplotypes as they may cause confusion in alignment. However, if you are interested in non-coding RNAs, then download the ncRNA fasta file from Ensembl or extract the transcriptome with the GTF file. We've also got example R code here to filter by gene biotypes and to extract transcriptome from the genome with the GTF file.
+The GTF file contains annotations for non-coding RNAs, while the cDNA fasta file does not. The cDNA file contains haplotypes, while the GTF file does not. For pseudoalignment of RNA-seq reads from polyA selected techniques, non-coding RNAs in the GTF file probably aren't so important, unless you do care about polyadenylated lncRNAs, so it's fine to use the cDNA fasta file, but we should remove the haplotypes as they may cause confusion in alignment. However, if you are interested in non-coding RNAs, then download the ncRNA fasta file from Ensembl or extract the transcriptome with the GTF file. We've also got example R code here to filter by gene biotypes and to extract transcriptome from the genome with the GTF file.
 
 ```{r}
 sessionInfo()
